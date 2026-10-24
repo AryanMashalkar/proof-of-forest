@@ -1,0 +1,335 @@
+{
+  "method": "POF-NDVI-DiD-v1",
+  "params": {
+    "pixel_m": 10.0,
+    "max_scenes": 6,
+    "min_scenes": 2,
+    "max_scene_cloud": 40.0,
+    "control_inner_m": 300.0,
+    "control_outer_m": 1500.0,
+    "canopy_ndvi": 0.4,
+    "min_coverage": 0.8,
+    "min_net_gain": 0.05,
+    "min_robust_gain": 0.025,
+    "removal_tco2_ha_yr": 7.0,
+    "min_uncertainty_deduction": 0.1,
+    "max_uncertainty_deduction": 0.5
+  },
+  "project": {
+    "id": "smritivan-bhuj",
+    "name": "Smritivan Miyawaki Forest, Bhuj",
+    "geometry": {
+      "type": "Polygon",
+      "coordinates": [
+        [
+          [
+            69.683895,
+            23.240113
+          ],
+          [
+            69.683609,
+            23.241743
+          ],
+          [
+            69.685184,
+            23.243455
+          ],
+          [
+            69.685868,
+            23.242718
+          ],
+          [
+            69.687727,
+            23.242811
+          ],
+          [
+            69.688049,
+            23.241666
+          ],
+          [
+            69.690171,
+            23.241804
+          ],
+          [
+            69.693356,
+            23.241124
+          ],
+          [
+            69.694185,
+            23.241515
+          ],
+          [
+            69.695253,
+            23.239701
+          ],
+          [
+            69.694955,
+            23.238888
+          ],
+          [
+            69.694182,
+            23.239319
+          ],
+          [
+            69.692998,
+            23.239168
+          ],
+          [
+            69.692705,
+            23.23935
+          ],
+          [
+            69.693976,
+            23.239936
+          ],
+          [
+            69.693044,
+            23.240342
+          ],
+          [
+            69.691822,
+            23.239804
+          ],
+          [
+            69.691332,
+            23.239085
+          ],
+          [
+            69.687785,
+            23.239654
+          ],
+          [
+            69.686925,
+            23.238923
+          ],
+          [
+            69.683895,
+            23.240113
+          ]
+        ]
+      ]
+    },
+    "geometryHash": "0x8879f2f3d4b8d1d05c2946b15d330a7ade52b185d1a2aed516909e2bdc84acb1",
+    "areaHa": 31.5,
+    "claim": "Dense native Miyawaki forest planted on the barren slopes of Bhujiyo Hill (earthquake memorial, planted from 2019)."
+  },
+  "data": {
+    "source": "Copernicus Sentinel-2 L2A (ESA), AWS Open Data registry: s3://sentinel-cogs",
+    "mgrsTile": "42QWL",
+    "baseline": {
+      "year": 2019,
+      "months": [
+        3,
+        4
+      ],
+      "scenes": [
+        {
+          "id": "S2B_42QWL_20190302_0_L2A",
+          "datetime": "2019-03-02T06:19:16.227000Z",
+          "tileCloudCover": 7.86,
+          "projectClearFraction": 1.0
+        },
+        {
+          "id": "S2A_42QWL_20190317_0_L2A",
+          "datetime": "2019-03-17T06:14:46.582000Z",
+          "tileCloudCover": 0.28,
+          "projectClearFraction": 1.0
+        },
+        {
+          "id": "S2A_42QWL_20190327_1_L2A",
+          "datetime": "2019-03-27T06:02:48.114000Z",
+          "tileCloudCover": 24.78,
+          "projectClearFraction": 1.0
+        },
+        {
+          "id": "S2B_42QWL_20190401_1_L2A",
+          "datetime": "2019-04-01T06:02:51.219000Z",
+          "tileCloudCover": 0.01,
+          "projectClearFraction": 1.0
+        },
+        {
+          "id": "S2A_42QWL_20190406_1_L2A",
+          "datetime": "2019-04-06T06:02:49.887000Z",
+          "tileCloudCover": 8.23,
+          "projectClearFraction": 1.0
+        },
+        {
+          "id": "S2B_42QWL_20190411_1_L2A",
+          "datetime": "2019-04-11T06:02:53.304000Z",
+          "tileCloudCover": 2.38,
+          "projectClearFraction": 1.0
+        }
+      ]
+    },
+    "monitoring": {
+      "year": 2025,
+      "months": [
+        3,
+        4
+      ],
+      "scenes": [
+        {
+          "id": "S2B_42QWL_20250320_0_L2A",
+          "datetime": "2025-03-20T06:02:51.691000Z",
+          "tileCloudCover": 0.06,
+          "projectClearFraction": 1.0
+        },
+        {
+          "id": "S2C_42QWL_20250325_0_L2A",
+          "datetime": "2025-03-25T06:03:10.567000Z",
+          "tileCloudCover": 0.01,
+          "projectClearFraction": 1.0
+        },
+        {
+          "id": "S2A_42QWL_20250327_0_L2A",
+          "datetime": "2025-03-27T06:02:56.801000Z",
+          "tileCloudCover": 0.05,
+          "projectClearFraction": 1.0
+        },
+        {
+          "id": "S2B_42QWL_20250330_0_L2A",
+          "datetime": "2025-03-30T06:02:49.740000Z",
+          "tileCloudCover": 0.72,
+          "projectClearFraction": 1.0
+        },
+        {
+          "id": "S2C_42QWL_20250404_0_L2A",
+          "datetime": "2025-04-04T06:03:11.956000Z",
+          "tileCloudCover": 0.02,
+          "projectClearFraction": 1.0
+        },
+        {
+          "id": "S2B_42QWL_20250409_0_L2A",
+          "datetime": "2025-04-09T06:02:50.724000Z",
+          "tileCloudCover": 2.15,
+          "projectClearFraction": 1.0
+        }
+      ]
+    }
+  },
+  "results": {
+    "coverage": 1.0,
+    "controlCoverage": 1.0,
+    "projectNdviBaseline": 0.1363,
+    "projectNdviMonitoring": 0.4298,
+    "controlNdviBaseline": 0.1473,
+    "controlNdviMonitoring": 0.2167,
+    "projectDelta": 0.2935,
+    "controlDelta": 0.0693,
+    "netGain": 0.2242,
+    "naiveGain": 0.2935,
+    "naiveWouldPass": true,
+    "scenePairNetGainP10": 0.1973,
+    "scenePairNetGainP50": 0.2268,
+    "scenePairs": 36,
+    "canopyFracBaseline": 0.0022,
+    "canopyFracMonitoring": 0.5543,
+    "controlCanopyFracBaseline": 0.0301,
+    "controlCanopyFracMonitoring": 0.1115,
+    "rawCanopyGainHa": 17.39,
+    "additionalCanopyHa": 14.83,
+    "years": 6,
+    "grossTonnes": 622.69,
+    "uncertaintyDeduction": 0.1302,
+    "creditTonnes": 541
+  },
+  "checks": [
+    {
+      "id": "coverage",
+      "label": "Cloud-free coverage of the polygon in both windows",
+      "value": 1.0,
+      "threshold": 0.8,
+      "pass": true
+    },
+    {
+      "id": "scenes",
+      "label": "Independent clear scenes per window",
+      "value": 6,
+      "threshold": 2,
+      "pass": true
+    },
+    {
+      "id": "netGain",
+      "label": "NDVI gain beyond the control area (difference-in-differences)",
+      "value": 0.2242,
+      "threshold": 0.05,
+      "pass": true
+    },
+    {
+      "id": "robustness",
+      "label": "Gain holds in the pessimistic 10th percentile of scene pairs",
+      "value": 0.1973,
+      "threshold": 0.025,
+      "pass": true
+    },
+    {
+      "id": "canopy",
+      "label": "Additional canopy area (ha) beyond control trend",
+      "value": 14.83,
+      "threshold": 1.0,
+      "pass": true
+    }
+  ],
+  "passed": true,
+  "evidence": {
+    "zoom_baseline_rgb.png": {
+      "file": "zoom_baseline_rgb.png",
+      "sha256": "606c61e783f908bd62bb57ac4d892c0f3cb2f1f79db5e4302eea3b109f13b4a3"
+    },
+    "zoom_monitoring_rgb.png": {
+      "file": "zoom_monitoring_rgb.png",
+      "sha256": "e765908389148aef48add0b678d4ffe4f2de968b684b265ba3268202d304a6fb"
+    },
+    "zoom_baseline_ndvi.png": {
+      "file": "zoom_baseline_ndvi.png",
+      "sha256": "e20c56f15317c8d1471d57c2245781212acf32e0ca3b11084def7f4105c6ad29"
+    },
+    "zoom_monitoring_ndvi.png": {
+      "file": "zoom_monitoring_ndvi.png",
+      "sha256": "b7195d4e49d0ac6a6295506e2c0cf6ba448ac5ac9347be7051a1ef442397516a"
+    },
+    "zoom_ndvi_change.png": {
+      "file": "zoom_ndvi_change.png",
+      "sha256": "eb51af15e90392b3ce0e171c5135d3401317c706ccee9f11987834c44bf71f4d"
+    },
+    "baseline_rgb.png": {
+      "file": "baseline_rgb.png",
+      "sha256": "672f1a3d0c1d197c9f8d432257227cb3a897cf928124d8656fc68ddf4fe4557f"
+    },
+    "monitoring_rgb.png": {
+      "file": "monitoring_rgb.png",
+      "sha256": "c124837c87176dbc2fc6c007bda6ebb53c53d95be90043961041a4d366bdf029"
+    },
+    "baseline_ndvi.png": {
+      "file": "baseline_ndvi.png",
+      "sha256": "898518099de74a0820f1514333f878c10deab5ca7ff7eb01235323a1869b8b31"
+    },
+    "monitoring_ndvi.png": {
+      "file": "monitoring_ndvi.png",
+      "sha256": "65df0a8c08c1c3b15ca55defcc35580ffb3530484c22d26c067a1ced2dd04b7e"
+    },
+    "ndvi_change.png": {
+      "file": "ndvi_change.png",
+      "sha256": "556a65009c65f4fc3be852f8a9906cea2b6d993dc8bc43e9104783282fda7c03"
+    },
+    "ndvi_histogram.png": {
+      "file": "ndvi_histogram.png",
+      "sha256": "ba77ceaa4bd5c4073d3122efeda06a138874b8fbd208a5ac163625431f18d8d0"
+    }
+  },
+  "reportHash": "0x735fbe28a54ecc40b9304af52e646c75b4536612b8faa6899028d2b1c9e795e3",
+  "attestation": {
+    "geometryHash": "0x8879f2f3d4b8d1d05c2946b15d330a7ade52b185d1a2aed516909e2bdc84acb1",
+    "reportHash": "0x735fbe28a54ecc40b9304af52e646c75b4536612b8faa6899028d2b1c9e795e3",
+    "baselineYear": 2019,
+    "monitoringYear": 2025,
+    "ndviBaseline": 1363,
+    "ndviMonitoring": 4298,
+    "controlDelta": 693,
+    "netGain": 2242,
+    "validCoverageBps": 10000,
+    "canopyGainHa100": 1483,
+    "creditTonnes": 541,
+    "passed": true
+  }
+}

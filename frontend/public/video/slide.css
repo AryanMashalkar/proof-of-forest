@@ -1,0 +1,21 @@
+@import url("../../node_modules/@fontsource-variable/inter/index.css");
+:root{--bg:#06110c;--accent:#3ee08f;--accent2:#9ef0c4;--muted:#8fa99a;--text:#e6f2ea;--line:#1d3b2c}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:radial-gradient(1100px 600px at 80% -10%,rgba(62,224,143,.16),transparent 60%),radial-gradient(900px 500px at -10% 110%,rgba(108,199,255,.08),transparent 60%),var(--bg);color:var(--text);font-family:"Inter Variable",Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+.wrap{height:100%;display:flex;flex-direction:column;justify-content:center;padding:0 120px}
+.logo{display:flex;align-items:center;gap:14px;font-weight:700;font-size:26px;margin-bottom:34px}
+.mark{width:40px;height:40px;border-radius:11px;background:linear-gradient(135deg,transparent 45%,rgba(6,17,12,.9) 46%,rgba(6,17,12,.9) 54%,transparent 55%),conic-gradient(from 200deg,#1f8f55,#3ee08f,#9ef0c4,#1f8f55);box-shadow:0 0 26px rgba(62,224,143,.4)}
+h1{font-size:76px;line-height:1.04;letter-spacing:-.035em;margin:0 0 22px}
+h1 em{font-style:normal;background:linear-gradient(90deg,var(--accent),var(--accent2));-webkit-background-clip:text;background-clip:text;color:transparent}
+h2{font-size:52px;letter-spacing:-.03em;margin:0 0 36px}
+p.sub{font-size:26px;color:var(--muted);max-width:1000px;margin:0}
+.eyebrow{text-transform:uppercase;letter-spacing:.14em;color:var(--accent);font-weight:600;font-size:16px;margin-bottom:14px}
+.cols{display:grid;grid-template-columns:repeat(3,1fr);gap:26px}
+.col{border:1px solid var(--line);border-radius:18px;padding:28px;background:linear-gradient(180deg,#0d1f17,#0a1912)}
+.col b{display:block;font-size:26px;margin-bottom:10px}
+.col span{color:var(--muted);font-size:20px;line-height:1.45}
+.col.bad b{color:#ff8f8f}.col.good b{color:var(--accent)}
+.fade>*{animation:in .7s both}.fade>*:nth-child(2){animation-delay:.25s}.fade>*:nth-child(3){animation-delay:.5s}.fade>*:nth-child(4){animation-delay:.75s}
+.cols .col{animation:in .7s both}.cols .col:nth-child(2){animation-delay:1.5s}.cols .col:nth-child(3){animation-delay:3s}
+@keyframes in{from{opacity:0;transform:translateY(14px)}}
+.foot{position:fixed;bottom:40px;left:120px;color:var(--muted);font-size:16px}

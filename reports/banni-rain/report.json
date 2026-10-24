@@ -1,0 +1,279 @@
+{
+  "method": "POF-NDVI-DiD-v1",
+  "params": {
+    "pixel_m": 10.0,
+    "max_scenes": 6,
+    "min_scenes": 2,
+    "max_scene_cloud": 40.0,
+    "control_inner_m": 300.0,
+    "control_outer_m": 1500.0,
+    "canopy_ndvi": 0.4,
+    "min_coverage": 0.8,
+    "min_net_gain": 0.05,
+    "min_robust_gain": 0.025,
+    "removal_tco2_ha_yr": 7.0,
+    "min_uncertainty_deduction": 0.1,
+    "max_uncertainty_deduction": 0.5
+  },
+  "project": {
+    "id": "banni-rain",
+    "name": "\"Banni Regreening\" Claim",
+    "geometry": {
+      "type": "Polygon",
+      "coordinates": [
+        [
+          [
+            69.483,
+            23.683
+          ],
+          [
+            69.497,
+            23.684
+          ],
+          [
+            69.499,
+            23.692
+          ],
+          [
+            69.495,
+            23.699
+          ],
+          [
+            69.484,
+            23.698
+          ],
+          [
+            69.479,
+            23.691
+          ],
+          [
+            69.483,
+            23.683
+          ]
+        ]
+      ]
+    },
+    "geometryHash": "0x5f2bd0c94f44da77b7f21a095792fed48b8e89f7ff786ff1e79ffa448c9d4438",
+    "areaHa": 276.55,
+    "claim": "HYPOTHETICAL greenwashing submission: claims restoration on grassland whose greening came from a swing from a drought year to a wet monsoon that greened the whole region."
+  },
+  "data": {
+    "source": "Copernicus Sentinel-2 L2A (ESA), AWS Open Data registry: s3://sentinel-cogs",
+    "mgrsTile": "42QWM",
+    "baseline": {
+      "year": 2018,
+      "months": [
+        10,
+        11
+      ],
+      "scenes": [
+        {
+          "id": "S2A_42QWM_20181001_0_L2A",
+          "datetime": "2018-10-01T06:02:46.062000Z",
+          "tileCloudCover": 2.28,
+          "projectClearFraction": 1.0
+        },
+        {
+          "id": "S2B_42QWM_20181003_0_L2A",
+          "datetime": "2018-10-03T06:01:56.228000Z",
+          "tileCloudCover": 4.33,
+          "projectClearFraction": 1.0
+        },
+        {
+          "id": "S2B_42QWM_20181006_0_L2A",
+          "datetime": "2018-10-06T06:04:26.003000Z",
+          "tileCloudCover": 2.02,
+          "projectClearFraction": 1.0
+        },
+        {
+          "id": "S2A_42QWM_20181021_0_L2A",
+          "datetime": "2018-10-21T06:10:50.406000Z",
+          "tileCloudCover": 2.87,
+          "projectClearFraction": 1.0
+        },
+        {
+          "id": "S2B_42QWM_20181023_0_L2A",
+          "datetime": "2018-10-23T05:51:18.552000Z",
+          "tileCloudCover": 3.96,
+          "projectClearFraction": 1.0
+        },
+        {
+          "id": "S2B_42QWM_20181026_0_L2A",
+          "datetime": "2018-10-26T06:10:10.253000Z",
+          "tileCloudCover": 2.25,
+          "projectClearFraction": 1.0
+        }
+      ]
+    },
+    "monitoring": {
+      "year": 2020,
+      "months": [
+        10,
+        11
+      ],
+      "scenes": [
+        {
+          "id": "S2A_42QWM_20201116_1_L2A",
+          "datetime": "2020-11-16T06:02:37.425000Z",
+          "tileCloudCover": 0.7,
+          "projectClearFraction": 0.999
+        },
+        {
+          "id": "S2B_42QWM_20201101_1_L2A",
+          "datetime": "2020-11-01T06:02:36.928000Z",
+          "tileCloudCover": 0.33,
+          "projectClearFraction": 0.9986
+        },
+        {
+          "id": "S2A_42QWM_20201030_1_L2A",
+          "datetime": "2020-10-30T06:12:34.738000Z",
+          "tileCloudCover": 0.59,
+          "projectClearFraction": 0.9983
+        },
+        {
+          "id": "S2A_42QWM_20201027_1_L2A",
+          "datetime": "2020-10-27T06:02:39.451000Z",
+          "tileCloudCover": 0.35,
+          "projectClearFraction": 0.9969
+        },
+        {
+          "id": "S2B_42QWM_20201111_1_L2A",
+          "datetime": "2020-11-11T06:02:35.341000Z",
+          "tileCloudCover": 0.56,
+          "projectClearFraction": 0.9963
+        },
+        {
+          "id": "S2B_42QWM_20201104_1_L2A",
+          "datetime": "2020-11-04T06:12:31.916000Z",
+          "tileCloudCover": 0.8,
+          "projectClearFraction": 0.9958
+        }
+      ]
+    }
+  },
+  "results": {
+    "coverage": 0.9996,
+    "controlCoverage": 0.9974,
+    "projectNdviBaseline": 0.153,
+    "projectNdviMonitoring": 0.6361,
+    "controlNdviBaseline": 0.1868,
+    "controlNdviMonitoring": 0.6639,
+    "projectDelta": 0.4831,
+    "controlDelta": 0.4771,
+    "netGain": 0.006,
+    "naiveGain": 0.4831,
+    "naiveWouldPass": true,
+    "scenePairNetGainP10": -0.0096,
+    "scenePairNetGainP50": 0.0032,
+    "scenePairs": 36,
+    "canopyFracBaseline": 0.0004,
+    "canopyFracMonitoring": 0.9762,
+    "controlCanopyFracBaseline": 0.0049,
+    "controlCanopyFracMonitoring": 0.9918,
+    "rawCanopyGainHa": 269.85,
+    "additionalCanopyHa": 0.0,
+    "years": 2,
+    "grossTonnes": 0.0,
+    "uncertaintyDeduction": 0.5,
+    "creditTonnes": 0
+  },
+  "checks": [
+    {
+      "id": "coverage",
+      "label": "Cloud-free coverage of the polygon in both windows",
+      "value": 0.9996,
+      "threshold": 0.8,
+      "pass": true
+    },
+    {
+      "id": "scenes",
+      "label": "Independent clear scenes per window",
+      "value": 6,
+      "threshold": 2,
+      "pass": true
+    },
+    {
+      "id": "netGain",
+      "label": "NDVI gain beyond the control area (difference-in-differences)",
+      "value": 0.006,
+      "threshold": 0.05,
+      "pass": false
+    },
+    {
+      "id": "robustness",
+      "label": "Gain holds in the pessimistic 10th percentile of scene pairs",
+      "value": -0.0096,
+      "threshold": 0.025,
+      "pass": false
+    },
+    {
+      "id": "canopy",
+      "label": "Additional canopy area (ha) beyond control trend",
+      "value": 0.0,
+      "threshold": 1.0,
+      "pass": false
+    }
+  ],
+  "passed": false,
+  "evidence": {
+    "zoom_baseline_rgb.png": {
+      "file": "zoom_baseline_rgb.png",
+      "sha256": "bb3d39c960341dcb843048024322d0f4a56f9e3ab1a30b5afd8d094316517682"
+    },
+    "zoom_monitoring_rgb.png": {
+      "file": "zoom_monitoring_rgb.png",
+      "sha256": "97e44b7ff0f0b9edbf8fe4785f75afbae5d110d737947085cca67c6808775c2b"
+    },
+    "zoom_baseline_ndvi.png": {
+      "file": "zoom_baseline_ndvi.png",
+      "sha256": "f46e29141383bb390a1e77465dc25d93fab96568d1e90dbe12a250ab040cc4f9"
+    },
+    "zoom_monitoring_ndvi.png": {
+      "file": "zoom_monitoring_ndvi.png",
+      "sha256": "d5b1ccc76e8cb38d67ca965b22964229b413ed412f6236d54292a074ad98a781"
+    },
+    "zoom_ndvi_change.png": {
+      "file": "zoom_ndvi_change.png",
+      "sha256": "73f603ff90a01f0be89bba3800bcba6868a4e5f6ed666cc8f35e9b1665ea8ea3"
+    },
+    "baseline_rgb.png": {
+      "file": "baseline_rgb.png",
+      "sha256": "66ab5967953e36dee8990c8b357a571a053ad3eb2176a10f6c0aeed39f16ba5e"
+    },
+    "monitoring_rgb.png": {
+      "file": "monitoring_rgb.png",
+      "sha256": "ab03de8095c8b860539eea97af29d4db085eba7bbc8b2ad2d58d09946505ee99"
+    },
+    "baseline_ndvi.png": {
+      "file": "baseline_ndvi.png",
+      "sha256": "af42e1af425135088c1ae7324c3d3e6e83fa66675caa70bc3c763df8de207f30"
+    },
+    "monitoring_ndvi.png": {
+      "file": "monitoring_ndvi.png",
+      "sha256": "022637004cc2ec7cf6a224fcc80fcf7f15d4591fa4bebc5d28070afb5d5f58c1"
+    },
+    "ndvi_change.png": {
+      "file": "ndvi_change.png",
+      "sha256": "8ace4faaebfdfe7f7f21f13d63ae2fdfdc8a73bc90550c6b2b497802fb405c53"
+    },
+    "ndvi_histogram.png": {
+      "file": "ndvi_histogram.png",
+      "sha256": "5a026493b6f63345abb37a94581fd2fb1836b6be243daeb0f33f14e5b24d1032"
+    }
+  },
+  "reportHash": "0x1f2dcf714027e0af07b259f98c6afb67ff1be00c8df20bf1aa1c2499019c6bc0",
+  "attestation": {
+    "geometryHash": "0x5f2bd0c94f44da77b7f21a095792fed48b8e89f7ff786ff1e79ffa448c9d4438",
+    "reportHash": "0x1f2dcf714027e0af07b259f98c6afb67ff1be00c8df20bf1aa1c2499019c6bc0",
+    "baselineYear": 2018,
+    "monitoringYear": 2020,
+    "ndviBaseline": 1530,
+    "ndviMonitoring": 6361,
+    "controlDelta": 4771,
+    "netGain": 60,
+    "validCoverageBps": 9996,
+    "canopyGainHa100": 0,
+    "creditTonnes": 0,
+    "passed": false
+  }
+}

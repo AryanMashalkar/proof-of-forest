@@ -1,0 +1,2130 @@
+[
+ {
+  "inputs": [
+   {
+    "internalType": "address",
+    "name": "admin",
+    "type": "address"
+   },
+   {
+    "internalType": "address[]",
+    "name": "oracles",
+    "type": "address[]"
+   },
+   {
+    "internalType": "uint8",
+    "name": "threshold",
+    "type": "uint8"
+   },
+   {
+    "internalType": "string",
+    "name": "uri_",
+    "type": "string"
+   }
+  ],
+  "stateMutability": "nonpayable",
+  "type": "constructor"
+ },
+ {
+  "inputs": [],
+  "name": "AccessControlBadConfirmation",
+  "type": "error"
+ },
+ {
+  "inputs": [
+   {
+    "internalType": "address",
+    "name": "account",
+    "type": "address"
+   },
+   {
+    "internalType": "bytes32",
+    "name": "neededRole",
+    "type": "bytes32"
+   }
+  ],
+  "name": "AccessControlUnauthorizedAccount",
+  "type": "error"
+ },
+ {
+  "inputs": [],
+  "name": "AttestationExpired",
+  "type": "error"
+ },
+ {
+  "inputs": [],
+  "name": "ECDSAInvalidSignature",
+  "type": "error"
+ },
+ {
+  "inputs": [
+   {
+    "internalType": "uint256",
+    "name": "length",
+    "type": "uint256"
+   }
+  ],
+  "name": "ECDSAInvalidSignatureLength",
+  "type": "error"
+ },
+ {
+  "inputs": [
+   {
+    "internalType": "bytes32",
+    "name": "s",
+    "type": "bytes32"
+   }
+  ],
+  "name": "ECDSAInvalidSignatureS",
+  "type": "error"
+ },
+ {
+  "inputs": [
+   {
+    "internalType": "address",
+    "name": "sender",
+    "type": "address"
+   },
+   {
+    "internalType": "uint256",
+    "name": "balance",
+    "type": "uint256"
+   },
+   {
+    "internalType": "uint256",
+    "name": "needed",
+    "type": "uint256"
+   },
+   {
+    "internalType": "uint256",
+    "name": "tokenId",
+    "type": "uint256"
+   }
+  ],
+  "name": "ERC1155InsufficientBalance",
+  "type": "error"
+ },
+ {
+  "inputs": [
+   {
+    "internalType": "address",
+    "name": "approver",
+    "type": "address"
+   }
+  ],
+  "name": "ERC1155InvalidApprover",
+  "type": "error"
+ },
+ {
+  "inputs": [
+   {
+    "internalType": "uint256",
+    "name": "idsLength",
+    "type": "uint256"
+   },
+   {
+    "internalType": "uint256",
+    "name": "valuesLength",
+    "type": "uint256"
+   }
+  ],
+  "name": "ERC1155InvalidArrayLength",
+  "type": "error"
+ },
+ {
+  "inputs": [
+   {
+    "internalType": "address",
+    "name": "operator",
+    "type": "address"
+   }
+  ],
+  "name": "ERC1155InvalidOperator",
+  "type": "error"
+ },
+ {
+  "inputs": [
+   {
+    "internalType": "address",
+    "name": "receiver",
+    "type": "address"
+   }
+  ],
+  "name": "ERC1155InvalidReceiver",
+  "type": "error"
+ },
+ {
+  "inputs": [
+   {
+    "internalType": "address",
+    "name": "sender",
+    "type": "address"
+   }
+  ],
+  "name": "ERC1155InvalidSender",
+  "type": "error"
+ },
+ {
+  "inputs": [
+   {
+    "internalType": "address",
+    "name": "operator",
+    "type": "address"
+   },
+   {
+    "internalType": "address",
+    "name": "owner",
+    "type": "address"
+   }
+  ],
+  "name": "ERC1155MissingApprovalForAll",
+  "type": "error"
+ },
+ {
+  "inputs": [],
+  "name": "EnforcedPause",
+  "type": "error"
+ },
+ {
+  "inputs": [],
+  "name": "ExpectedPause",
+  "type": "error"
+ },
+ {
+  "inputs": [
+   {
+    "internalType": "uint256",
+    "name": "projectId",
+    "type": "uint256"
+   }
+  ],
+  "name": "GeometryAlreadyRegistered",
+  "type": "error"
+ },
+ {
+  "inputs": [],
+  "name": "GeometryMismatch",
+  "type": "error"
+ },
+ {
+  "inputs": [],
+  "name": "InvalidAmount",
+  "type": "error"
+ },
+ {
+  "inputs": [],
+  "name": "InvalidCreditingPeriod",
+  "type": "error"
+ },
+ {
+  "inputs": [],
+  "name": "InvalidPolicy",
+  "type": "error"
+ },
+ {
+  "inputs": [],
+  "name": "InvalidShortString",
+  "type": "error"
+ },
+ {
+  "inputs": [],
+  "name": "NotAuthorized",
+  "type": "error"
+ },
+ {
+  "inputs": [
+   {
+    "internalType": "uint256",
+    "name": "valid",
+    "type": "uint256"
+   },
+   {
+    "internalType": "uint256",
+    "name": "required",
+    "type": "uint256"
+   }
+  ],
+  "name": "NotEnoughOracleSignatures",
+  "type": "error"
+ },
+ {
+  "inputs": [],
+  "name": "ProjectHasBufferShortfall",
+  "type": "error"
+ },
+ {
+  "inputs": [],
+  "name": "ReportAlreadyUsed",
+  "type": "error"
+ },
+ {
+  "inputs": [
+   {
+    "internalType": "address",
+    "name": "signer",
+    "type": "address"
+   }
+  ],
+  "name": "SignerNotOracle",
+  "type": "error"
+ },
+ {
+  "inputs": [],
+  "name": "SignersNotSorted",
+  "type": "error"
+ },
+ {
+  "inputs": [
+   {
+    "internalType": "string",
+    "name": "str",
+    "type": "string"
+   }
+  ],
+  "name": "StringTooLong",
+  "type": "error"
+ },
+ {
+  "inputs": [],
+  "name": "UnknownBatch",
+  "type": "error"
+ },
+ {
+  "inputs": [],
+  "name": "UnknownProject",
+  "type": "error"
+ },
+ {
+  "anonymous": false,
+  "inputs": [
+   {
+    "indexed": true,
+    "internalType": "address",
+    "name": "account",
+    "type": "address"
+   },
+   {
+    "indexed": true,
+    "internalType": "address",
+    "name": "operator",
+    "type": "address"
+   },
+   {
+    "indexed": false,
+    "internalType": "bool",
+    "name": "approved",
+    "type": "bool"
+   }
+  ],
+  "name": "ApprovalForAll",
+  "type": "event"
+ },
+ {
+  "anonymous": false,
+  "inputs": [
+   {
+    "indexed": true,
+    "internalType": "uint256",
+    "name": "projectId",
+    "type": "uint256"
+   },
+   {
+    "indexed": true,
+    "internalType": "uint256",
+    "name": "batchId",
+    "type": "uint256"
+   },
+   {
+    "indexed": false,
+    "internalType": "uint16",
+    "name": "vintage",
+    "type": "uint16"
+   },
+   {
+    "indexed": false,
+    "internalType": "uint64",
+    "name": "serialStart",
+    "type": "uint64"
+   },
+   {
+    "indexed": false,
+    "internalType": "uint64",
+    "name": "issued",
+    "type": "uint64"
+   },
+   {
+    "indexed": false,
+    "internalType": "uint64",
+    "name": "buffer",
+    "type": "uint64"
+   }
+  ],
+  "name": "CreditsIssued",
+  "type": "event"
+ },
+ {
+  "anonymous": false,
+  "inputs": [
+   {
+    "indexed": true,
+    "internalType": "uint256",
+    "name": "retirementId",
+    "type": "uint256"
+   },
+   {
+    "indexed": true,
+    "internalType": "uint256",
+    "name": "batchId",
+    "type": "uint256"
+   },
+   {
+    "indexed": true,
+    "internalType": "address",
+    "name": "retiree",
+    "type": "address"
+   },
+   {
+    "indexed": false,
+    "internalType": "uint64",
+    "name": "serialFrom",
+    "type": "uint64"
+   },
+   {
+    "indexed": false,
+    "internalType": "uint64",
+    "name": "serialTo",
+    "type": "uint64"
+   },
+   {
+    "indexed": false,
+    "internalType": "string",
+    "name": "beneficiary",
+    "type": "string"
+   },
+   {
+    "indexed": false,
+    "internalType": "string",
+    "name": "purpose",
+    "type": "string"
+   }
+  ],
+  "name": "CreditsRetired",
+  "type": "event"
+ },
+ {
+  "anonymous": false,
+  "inputs": [],
+  "name": "EIP712DomainChanged",
+  "type": "event"
+ },
+ {
+  "anonymous": false,
+  "inputs": [
+   {
+    "indexed": false,
+    "internalType": "address",
+    "name": "account",
+    "type": "address"
+   }
+  ],
+  "name": "Paused",
+  "type": "event"
+ },
+ {
+  "anonymous": false,
+  "inputs": [
+   {
+    "indexed": false,
+    "internalType": "uint8",
+    "name": "oracleThreshold",
+    "type": "uint8"
+   },
+   {
+    "indexed": false,
+    "internalType": "int32",
+    "name": "minNetGain",
+    "type": "int32"
+   },
+   {
+    "indexed": false,
+    "internalType": "uint32",
+    "name": "minCoverageBps",
+    "type": "uint32"
+   },
+   {
+    "indexed": false,
+    "internalType": "uint16",
+    "name": "bufferBps",
+    "type": "uint16"
+   }
+  ],
+  "name": "PolicyUpdated",
+  "type": "event"
+ },
+ {
+  "anonymous": false,
+  "inputs": [
+   {
+    "indexed": true,
+    "internalType": "uint256",
+    "name": "projectId",
+    "type": "uint256"
+   },
+   {
+    "indexed": true,
+    "internalType": "address",
+    "name": "developer",
+    "type": "address"
+   },
+   {
+    "indexed": false,
+    "internalType": "bytes32",
+    "name": "geometryHash",
+    "type": "bytes32"
+   },
+   {
+    "indexed": false,
+    "internalType": "uint16",
+    "name": "startYear",
+    "type": "uint16"
+   },
+   {
+    "indexed": false,
+    "internalType": "string",
+    "name": "name",
+    "type": "string"
+   }
+  ],
+  "name": "ProjectRegistered",
+  "type": "event"
+ },
+ {
+  "anonymous": false,
+  "inputs": [
+   {
+    "indexed": true,
+    "internalType": "uint256",
+    "name": "projectId",
+    "type": "uint256"
+   },
+   {
+    "indexed": true,
+    "internalType": "uint256",
+    "name": "batchId",
+    "type": "uint256"
+   },
+   {
+    "indexed": false,
+    "internalType": "bytes32",
+    "name": "reportHash",
+    "type": "bytes32"
+   },
+   {
+    "indexed": false,
+    "internalType": "uint64",
+    "name": "lostTonnes",
+    "type": "uint64"
+   },
+   {
+    "indexed": false,
+    "internalType": "uint64",
+    "name": "cancelledFromBuffer",
+    "type": "uint64"
+   },
+   {
+    "indexed": false,
+    "internalType": "uint64",
+    "name": "shortfall",
+    "type": "uint64"
+   }
+  ],
+  "name": "ReversalRecorded",
+  "type": "event"
+ },
+ {
+  "anonymous": false,
+  "inputs": [
+   {
+    "indexed": true,
+    "internalType": "bytes32",
+    "name": "role",
+    "type": "bytes32"
+   },
+   {
+    "indexed": true,
+    "internalType": "bytes32",
+    "name": "previousAdminRole",
+    "type": "bytes32"
+   },
+   {
+    "indexed": true,
+    "internalType": "bytes32",
+    "name": "newAdminRole",
+    "type": "bytes32"
+   }
+  ],
+  "name": "RoleAdminChanged",
+  "type": "event"
+ },
+ {
+  "anonymous": false,
+  "inputs": [
+   {
+    "indexed": true,
+    "internalType": "bytes32",
+    "name": "role",
+    "type": "bytes32"
+   },
+   {
+    "indexed": true,
+    "internalType": "address",
+    "name": "account",
+    "type": "address"
+   },
+   {
+    "indexed": true,
+    "internalType": "address",
+    "name": "sender",
+    "type": "address"
+   }
+  ],
+  "name": "RoleGranted",
+  "type": "event"
+ },
+ {
+  "anonymous": false,
+  "inputs": [
+   {
+    "indexed": true,
+    "internalType": "bytes32",
+    "name": "role",
+    "type": "bytes32"
+   },
+   {
+    "indexed": true,
+    "internalType": "address",
+    "name": "account",
+    "type": "address"
+   },
+   {
+    "indexed": true,
+    "internalType": "address",
+    "name": "sender",
+    "type": "address"
+   }
+  ],
+  "name": "RoleRevoked",
+  "type": "event"
+ },
+ {
+  "anonymous": false,
+  "inputs": [
+   {
+    "indexed": true,
+    "internalType": "address",
+    "name": "operator",
+    "type": "address"
+   },
+   {
+    "indexed": true,
+    "internalType": "address",
+    "name": "from",
+    "type": "address"
+   },
+   {
+    "indexed": true,
+    "internalType": "address",
+    "name": "to",
+    "type": "address"
+   },
+   {
+    "indexed": false,
+    "internalType": "uint256[]",
+    "name": "ids",
+    "type": "uint256[]"
+   },
+   {
+    "indexed": false,
+    "internalType": "uint256[]",
+    "name": "values",
+    "type": "uint256[]"
+   }
+  ],
+  "name": "TransferBatch",
+  "type": "event"
+ },
+ {
+  "anonymous": false,
+  "inputs": [
+   {
+    "indexed": true,
+    "internalType": "address",
+    "name": "operator",
+    "type": "address"
+   },
+   {
+    "indexed": true,
+    "internalType": "address",
+    "name": "from",
+    "type": "address"
+   },
+   {
+    "indexed": true,
+    "internalType": "address",
+    "name": "to",
+    "type": "address"
+   },
+   {
+    "indexed": false,
+    "internalType": "uint256",
+    "name": "id",
+    "type": "uint256"
+   },
+   {
+    "indexed": false,
+    "internalType": "uint256",
+    "name": "value",
+    "type": "uint256"
+   }
+  ],
+  "name": "TransferSingle",
+  "type": "event"
+ },
+ {
+  "anonymous": false,
+  "inputs": [
+   {
+    "indexed": false,
+    "internalType": "string",
+    "name": "value",
+    "type": "string"
+   },
+   {
+    "indexed": true,
+    "internalType": "uint256",
+    "name": "id",
+    "type": "uint256"
+   }
+  ],
+  "name": "URI",
+  "type": "event"
+ },
+ {
+  "anonymous": false,
+  "inputs": [
+   {
+    "indexed": false,
+    "internalType": "address",
+    "name": "account",
+    "type": "address"
+   }
+  ],
+  "name": "Unpaused",
+  "type": "event"
+ },
+ {
+  "anonymous": false,
+  "inputs": [
+   {
+    "indexed": true,
+    "internalType": "uint256",
+    "name": "projectId",
+    "type": "uint256"
+   },
+   {
+    "indexed": true,
+    "internalType": "uint256",
+    "name": "verificationId",
+    "type": "uint256"
+   },
+   {
+    "indexed": true,
+    "internalType": "bytes32",
+    "name": "reportHash",
+    "type": "bytes32"
+   },
+   {
+    "indexed": false,
+    "internalType": "enum ProofOfForest.Outcome",
+    "name": "outcome",
+    "type": "uint8"
+   },
+   {
+    "indexed": false,
+    "internalType": "int32",
+    "name": "netGain",
+    "type": "int32"
+   },
+   {
+    "indexed": false,
+    "internalType": "uint64",
+    "name": "creditTonnes",
+    "type": "uint64"
+   }
+  ],
+  "name": "VerificationRecorded",
+  "type": "event"
+ },
+ {
+  "inputs": [],
+  "name": "ATTESTATION_TYPEHASH",
+  "outputs": [
+   {
+    "internalType": "bytes32",
+    "name": "",
+    "type": "bytes32"
+   }
+  ],
+  "stateMutability": "view",
+  "type": "function"
+ },
+ {
+  "inputs": [],
+  "name": "DEFAULT_ADMIN_ROLE",
+  "outputs": [
+   {
+    "internalType": "bytes32",
+    "name": "",
+    "type": "bytes32"
+   }
+  ],
+  "stateMutability": "view",
+  "type": "function"
+ },
+ {
+  "inputs": [],
+  "name": "ORACLE_ROLE",
+  "outputs": [
+   {
+    "internalType": "bytes32",
+    "name": "",
+    "type": "bytes32"
+   }
+  ],
+  "stateMutability": "view",
+  "type": "function"
+ },
+ {
+  "inputs": [],
+  "name": "POLICY_ROLE",
+  "outputs": [
+   {
+    "internalType": "bytes32",
+    "name": "",
+    "type": "bytes32"
+   }
+  ],
+  "stateMutability": "view",
+  "type": "function"
+ },
+ {
+  "inputs": [],
+  "name": "REVERSAL_TYPEHASH",
+  "outputs": [
+   {
+    "internalType": "bytes32",
+    "name": "",
+    "type": "bytes32"
+   }
+  ],
+  "stateMutability": "view",
+  "type": "function"
+ },
+ {
+  "inputs": [
+   {
+    "internalType": "address",
+    "name": "account",
+    "type": "address"
+   },
+   {
+    "internalType": "uint256",
+    "name": "id",
+    "type": "uint256"
+   }
+  ],
+  "name": "balanceOf",
+  "outputs": [
+   {
+    "internalType": "uint256",
+    "name": "",
+    "type": "uint256"
+   }
+  ],
+  "stateMutability": "view",
+  "type": "function"
+ },
+ {
+  "inputs": [
+   {
+    "internalType": "address[]",
+    "name": "accounts",
+    "type": "address[]"
+   },
+   {
+    "internalType": "uint256[]",
+    "name": "ids",
+    "type": "uint256[]"
+   }
+  ],
+  "name": "balanceOfBatch",
+  "outputs": [
+   {
+    "internalType": "uint256[]",
+    "name": "",
+    "type": "uint256[]"
+   }
+  ],
+  "stateMutability": "view",
+  "type": "function"
+ },
+ {
+  "inputs": [],
+  "name": "batchCount",
+  "outputs": [
+   {
+    "internalType": "uint256",
+    "name": "",
+    "type": "uint256"
+   }
+  ],
+  "stateMutability": "view",
+  "type": "function"
+ },
+ {
+  "inputs": [
+   {
+    "internalType": "uint256",
+    "name": "batchId",
+    "type": "uint256"
+   }
+  ],
+  "name": "batchRetirements",
+  "outputs": [
+   {
+    "internalType": "uint256[]",
+    "name": "",
+    "type": "uint256[]"
+   }
+  ],
+  "stateMutability": "view",
+  "type": "function"
+ },
+ {
+  "inputs": [],
+  "name": "bufferBps",
+  "outputs": [
+   {
+    "internalType": "uint16",
+    "name": "",
+    "type": "uint16"
+   }
+  ],
+  "stateMutability": "view",
+  "type": "function"
+ },
+ {
+  "inputs": [],
+  "name": "eip712Domain",
+  "outputs": [
+   {
+    "internalType": "bytes1",
+    "name": "fields",
+    "type": "bytes1"
+   },
+   {
+    "internalType": "string",
+    "name": "name",
+    "type": "string"
+   },
+   {
+    "internalType": "string",
+    "name": "version",
+    "type": "string"
+   },
+   {
+    "internalType": "uint256",
+    "name": "chainId",
+    "type": "uint256"
+   },
+   {
+    "internalType": "address",
+    "name": "verifyingContract",
+    "type": "address"
+   },
+   {
+    "internalType": "bytes32",
+    "name": "salt",
+    "type": "bytes32"
+   },
+   {
+    "internalType": "uint256[]",
+    "name": "extensions",
+    "type": "uint256[]"
+   }
+  ],
+  "stateMutability": "view",
+  "type": "function"
+ },
+ {
+  "inputs": [
+   {
+    "internalType": "uint256",
+    "name": "batchId",
+    "type": "uint256"
+   }
+  ],
+  "name": "getBatch",
+  "outputs": [
+   {
+    "components": [
+     {
+      "internalType": "uint256",
+      "name": "projectId",
+      "type": "uint256"
+     },
+     {
+      "internalType": "uint16",
+      "name": "vintage",
+      "type": "uint16"
+     },
+     {
+      "internalType": "uint64",
+      "name": "serialStart",
+      "type": "uint64"
+     },
+     {
+      "internalType": "uint64",
+      "name": "issued",
+      "type": "uint64"
+     },
+     {
+      "internalType": "uint64",
+      "name": "buffer",
+      "type": "uint64"
+     },
+     {
+      "internalType": "uint64",
+      "name": "retired",
+      "type": "uint64"
+     },
+     {
+      "internalType": "uint64",
+      "name": "cancelled",
+      "type": "uint64"
+     },
+     {
+      "internalType": "bytes32",
+      "name": "reportHash",
+      "type": "bytes32"
+     }
+    ],
+    "internalType": "struct ProofOfForest.Batch",
+    "name": "",
+    "type": "tuple"
+   }
+  ],
+  "stateMutability": "view",
+  "type": "function"
+ },
+ {
+  "inputs": [
+   {
+    "internalType": "uint256",
+    "name": "projectId",
+    "type": "uint256"
+   }
+  ],
+  "name": "getProject",
+  "outputs": [
+   {
+    "components": [
+     {
+      "internalType": "address",
+      "name": "developer",
+      "type": "address"
+     },
+     {
+      "internalType": "bytes32",
+      "name": "geometryHash",
+      "type": "bytes32"
+     },
+     {
+      "internalType": "uint16",
+      "name": "startYear",
+      "type": "uint16"
+     },
+     {
+      "internalType": "uint16",
+      "name": "lastMonitoringYear",
+      "type": "uint16"
+     },
+     {
+      "internalType": "uint64",
+      "name": "totalIssued",
+      "type": "uint64"
+     },
+     {
+      "internalType": "uint64",
+      "name": "totalBuffer",
+      "type": "uint64"
+     },
+     {
+      "internalType": "uint64",
+      "name": "reversedTonnes",
+      "type": "uint64"
+     },
+     {
+      "internalType": "uint64",
+      "name": "bufferShortfall",
+      "type": "uint64"
+     },
+     {
+      "internalType": "uint32",
+      "name": "rejections",
+      "type": "uint32"
+     },
+     {
+      "internalType": "string",
+      "name": "name",
+      "type": "string"
+     },
+     {
+      "internalType": "string",
+      "name": "metadataURI",
+      "type": "string"
+     }
+    ],
+    "internalType": "struct ProofOfForest.Project",
+    "name": "",
+    "type": "tuple"
+   }
+  ],
+  "stateMutability": "view",
+  "type": "function"
+ },
+ {
+  "inputs": [
+   {
+    "internalType": "uint256",
+    "name": "retirementId",
+    "type": "uint256"
+   }
+  ],
+  "name": "getRetirement",
+  "outputs": [
+   {
+    "components": [
+     {
+      "internalType": "uint256",
+      "name": "batchId",
+      "type": "uint256"
+     },
+     {
+      "internalType": "address",
+      "name": "retiree",
+      "type": "address"
+     },
+     {
+      "internalType": "uint64",
+      "name": "serialFrom",
+      "type": "uint64"
+     },
+     {
+      "internalType": "uint64",
+      "name": "serialTo",
+      "type": "uint64"
+     },
+     {
+      "internalType": "uint64",
+      "name": "timestamp",
+      "type": "uint64"
+     },
+     {
+      "internalType": "string",
+      "name": "beneficiary",
+      "type": "string"
+     },
+     {
+      "internalType": "string",
+      "name": "purpose",
+      "type": "string"
+     }
+    ],
+    "internalType": "struct ProofOfForest.Retirement",
+    "name": "",
+    "type": "tuple"
+   }
+  ],
+  "stateMutability": "view",
+  "type": "function"
+ },
+ {
+  "inputs": [
+   {
+    "internalType": "bytes32",
+    "name": "role",
+    "type": "bytes32"
+   }
+  ],
+  "name": "getRoleAdmin",
+  "outputs": [
+   {
+    "internalType": "bytes32",
+    "name": "",
+    "type": "bytes32"
+   }
+  ],
+  "stateMutability": "view",
+  "type": "function"
+ },
+ {
+  "inputs": [
+   {
+    "internalType": "uint256",
+    "name": "verificationId",
+    "type": "uint256"
+   }
+  ],
+  "name": "getVerification",
+  "outputs": [
+   {
+    "components": [
+     {
+      "internalType": "uint256",
+      "name": "projectId",
+      "type": "uint256"
+     },
+     {
+      "internalType": "bytes32",
+      "name": "reportHash",
+      "type": "bytes32"
+     },
+     {
+      "internalType": "uint16",
+      "name": "baselineYear",
+      "type": "uint16"
+     },
+     {
+      "internalType": "uint16",
+      "name": "monitoringYear",
+      "type": "uint16"
+     },
+     {
+      "internalType": "int32",
+      "name": "netGain",
+      "type": "int32"
+     },
+     {
+      "internalType": "uint32",
+      "name": "validCoverageBps",
+      "type": "uint32"
+     },
+     {
+      "internalType": "uint64",
+      "name": "creditTonnes",
+      "type": "uint64"
+     },
+     {
+      "internalType": "enum ProofOfForest.Outcome",
+      "name": "outcome",
+      "type": "uint8"
+     },
+     {
+      "internalType": "uint256",
+      "name": "batchId",
+      "type": "uint256"
+     },
+     {
+      "internalType": "uint64",
+      "name": "timestamp",
+      "type": "uint64"
+     }
+    ],
+    "internalType": "struct ProofOfForest.VerificationRecord",
+    "name": "",
+    "type": "tuple"
+   }
+  ],
+  "stateMutability": "view",
+  "type": "function"
+ },
+ {
+  "inputs": [
+   {
+    "internalType": "bytes32",
+    "name": "role",
+    "type": "bytes32"
+   },
+   {
+    "internalType": "address",
+    "name": "account",
+    "type": "address"
+   }
+  ],
+  "name": "grantRole",
+  "outputs": [],
+  "stateMutability": "nonpayable",
+  "type": "function"
+ },
+ {
+  "inputs": [
+   {
+    "internalType": "bytes32",
+    "name": "role",
+    "type": "bytes32"
+   },
+   {
+    "internalType": "address",
+    "name": "account",
+    "type": "address"
+   }
+  ],
+  "name": "hasRole",
+  "outputs": [
+   {
+    "internalType": "bool",
+    "name": "",
+    "type": "bool"
+   }
+  ],
+  "stateMutability": "view",
+  "type": "function"
+ },
+ {
+  "inputs": [
+   {
+    "components": [
+     {
+      "internalType": "uint256",
+      "name": "projectId",
+      "type": "uint256"
+     },
+     {
+      "internalType": "bytes32",
+      "name": "geometryHash",
+      "type": "bytes32"
+     },
+     {
+      "internalType": "bytes32",
+      "name": "reportHash",
+      "type": "bytes32"
+     },
+     {
+      "internalType": "uint16",
+      "name": "baselineYear",
+      "type": "uint16"
+     },
+     {
+      "internalType": "uint16",
+      "name": "monitoringYear",
+      "type": "uint16"
+     },
+     {
+      "internalType": "int32",
+      "name": "ndviBaseline",
+      "type": "int32"
+     },
+     {
+      "internalType": "int32",
+      "name": "ndviMonitoring",
+      "type": "int32"
+     },
+     {
+      "internalType": "int32",
+      "name": "controlDelta",
+      "type": "int32"
+     },
+     {
+      "internalType": "int32",
+      "name": "netGain",
+      "type": "int32"
+     },
+     {
+      "internalType": "uint32",
+      "name": "validCoverageBps",
+      "type": "uint32"
+     },
+     {
+      "internalType": "uint32",
+      "name": "canopyGainHa100",
+      "type": "uint32"
+     },
+     {
+      "internalType": "uint64",
+      "name": "creditTonnes",
+      "type": "uint64"
+     },
+     {
+      "internalType": "bool",
+      "name": "passed",
+      "type": "bool"
+     },
+     {
+      "internalType": "uint64",
+      "name": "expiry",
+      "type": "uint64"
+     }
+    ],
+    "internalType": "struct ProofOfForest.Attestation",
+    "name": "a",
+    "type": "tuple"
+   }
+  ],
+  "name": "hashAttestation",
+  "outputs": [
+   {
+    "internalType": "bytes32",
+    "name": "",
+    "type": "bytes32"
+   }
+  ],
+  "stateMutability": "view",
+  "type": "function"
+ },
+ {
+  "inputs": [
+   {
+    "components": [
+     {
+      "internalType": "uint256",
+      "name": "projectId",
+      "type": "uint256"
+     },
+     {
+      "internalType": "uint256",
+      "name": "batchId",
+      "type": "uint256"
+     },
+     {
+      "internalType": "bytes32",
+      "name": "reportHash",
+      "type": "bytes32"
+     },
+     {
+      "internalType": "uint64",
+      "name": "lostTonnes",
+      "type": "uint64"
+     },
+     {
+      "internalType": "uint64",
+      "name": "expiry",
+      "type": "uint64"
+     }
+    ],
+    "internalType": "struct ProofOfForest.Reversal",
+    "name": "r",
+    "type": "tuple"
+   }
+  ],
+  "name": "hashReversal",
+  "outputs": [
+   {
+    "internalType": "bytes32",
+    "name": "",
+    "type": "bytes32"
+   }
+  ],
+  "stateMutability": "view",
+  "type": "function"
+ },
+ {
+  "inputs": [
+   {
+    "internalType": "address",
+    "name": "account",
+    "type": "address"
+   },
+   {
+    "internalType": "address",
+    "name": "operator",
+    "type": "address"
+   }
+  ],
+  "name": "isApprovedForAll",
+  "outputs": [
+   {
+    "internalType": "bool",
+    "name": "",
+    "type": "bool"
+   }
+  ],
+  "stateMutability": "view",
+  "type": "function"
+ },
+ {
+  "inputs": [],
+  "name": "minCoverageBps",
+  "outputs": [
+   {
+    "internalType": "uint32",
+    "name": "",
+    "type": "uint32"
+   }
+  ],
+  "stateMutability": "view",
+  "type": "function"
+ },
+ {
+  "inputs": [],
+  "name": "minNetGain",
+  "outputs": [
+   {
+    "internalType": "int32",
+    "name": "",
+    "type": "int32"
+   }
+  ],
+  "stateMutability": "view",
+  "type": "function"
+ },
+ {
+  "inputs": [],
+  "name": "nextSerial",
+  "outputs": [
+   {
+    "internalType": "uint64",
+    "name": "",
+    "type": "uint64"
+   }
+  ],
+  "stateMutability": "view",
+  "type": "function"
+ },
+ {
+  "inputs": [],
+  "name": "oracleThreshold",
+  "outputs": [
+   {
+    "internalType": "uint8",
+    "name": "",
+    "type": "uint8"
+   }
+  ],
+  "stateMutability": "view",
+  "type": "function"
+ },
+ {
+  "inputs": [],
+  "name": "pause",
+  "outputs": [],
+  "stateMutability": "nonpayable",
+  "type": "function"
+ },
+ {
+  "inputs": [],
+  "name": "paused",
+  "outputs": [
+   {
+    "internalType": "bool",
+    "name": "",
+    "type": "bool"
+   }
+  ],
+  "stateMutability": "view",
+  "type": "function"
+ },
+ {
+  "inputs": [
+   {
+    "internalType": "uint256",
+    "name": "projectId",
+    "type": "uint256"
+   }
+  ],
+  "name": "projectBatches",
+  "outputs": [
+   {
+    "internalType": "uint256[]",
+    "name": "",
+    "type": "uint256[]"
+   }
+  ],
+  "stateMutability": "view",
+  "type": "function"
+ },
+ {
+  "inputs": [
+   {
+    "internalType": "bytes32",
+    "name": "",
+    "type": "bytes32"
+   }
+  ],
+  "name": "projectByGeometry",
+  "outputs": [
+   {
+    "internalType": "uint256",
+    "name": "",
+    "type": "uint256"
+   }
+  ],
+  "stateMutability": "view",
+  "type": "function"
+ },
+ {
+  "inputs": [],
+  "name": "projectCount",
+  "outputs": [
+   {
+    "internalType": "uint256",
+    "name": "",
+    "type": "uint256"
+   }
+  ],
+  "stateMutability": "view",
+  "type": "function"
+ },
+ {
+  "inputs": [
+   {
+    "internalType": "uint256",
+    "name": "projectId",
+    "type": "uint256"
+   }
+  ],
+  "name": "projectVerifications",
+  "outputs": [
+   {
+    "internalType": "uint256[]",
+    "name": "",
+    "type": "uint256[]"
+   }
+  ],
+  "stateMutability": "view",
+  "type": "function"
+ },
+ {
+  "inputs": [
+   {
+    "components": [
+     {
+      "internalType": "uint256",
+      "name": "projectId",
+      "type": "uint256"
+     },
+     {
+      "internalType": "uint256",
+      "name": "batchId",
+      "type": "uint256"
+     },
+     {
+      "internalType": "bytes32",
+      "name": "reportHash",
+      "type": "bytes32"
+     },
+     {
+      "internalType": "uint64",
+      "name": "lostTonnes",
+      "type": "uint64"
+     },
+     {
+      "internalType": "uint64",
+      "name": "expiry",
+      "type": "uint64"
+     }
+    ],
+    "internalType": "struct ProofOfForest.Reversal",
+    "name": "r",
+    "type": "tuple"
+   },
+   {
+    "internalType": "bytes[]",
+    "name": "signatures",
+    "type": "bytes[]"
+   }
+  ],
+  "name": "recordReversal",
+  "outputs": [],
+  "stateMutability": "nonpayable",
+  "type": "function"
+ },
+ {
+  "inputs": [
+   {
+    "internalType": "string",
+    "name": "name",
+    "type": "string"
+   },
+   {
+    "internalType": "bytes32",
+    "name": "geometryHash",
+    "type": "bytes32"
+   },
+   {
+    "internalType": "uint16",
+    "name": "startYear",
+    "type": "uint16"
+   },
+   {
+    "internalType": "string",
+    "name": "metadataURI",
+    "type": "string"
+   }
+  ],
+  "name": "registerProject",
+  "outputs": [
+   {
+    "internalType": "uint256",
+    "name": "projectId",
+    "type": "uint256"
+   }
+  ],
+  "stateMutability": "nonpayable",
+  "type": "function"
+ },
+ {
+  "inputs": [
+   {
+    "internalType": "bytes32",
+    "name": "role",
+    "type": "bytes32"
+   },
+   {
+    "internalType": "address",
+    "name": "callerConfirmation",
+    "type": "address"
+   }
+  ],
+  "name": "renounceRole",
+  "outputs": [],
+  "stateMutability": "nonpayable",
+  "type": "function"
+ },
+ {
+  "inputs": [
+   {
+    "internalType": "bytes32",
+    "name": "",
+    "type": "bytes32"
+   }
+  ],
+  "name": "reportUsed",
+  "outputs": [
+   {
+    "internalType": "bool",
+    "name": "",
+    "type": "bool"
+   }
+  ],
+  "stateMutability": "view",
+  "type": "function"
+ },
+ {
+  "inputs": [
+   {
+    "internalType": "uint256",
+    "name": "batchId",
+    "type": "uint256"
+   },
+   {
+    "internalType": "uint64",
+    "name": "amount",
+    "type": "uint64"
+   },
+   {
+    "internalType": "string",
+    "name": "beneficiary",
+    "type": "string"
+   },
+   {
+    "internalType": "string",
+    "name": "purpose",
+    "type": "string"
+   }
+  ],
+  "name": "retire",
+  "outputs": [
+   {
+    "internalType": "uint256",
+    "name": "retirementId",
+    "type": "uint256"
+   }
+  ],
+  "stateMutability": "nonpayable",
+  "type": "function"
+ },
+ {
+  "inputs": [
+   {
+    "internalType": "address",
+    "name": "account",
+    "type": "address"
+   },
+   {
+    "internalType": "uint256",
+    "name": "batchId",
+    "type": "uint256"
+   },
+   {
+    "internalType": "uint64",
+    "name": "amount",
+    "type": "uint64"
+   },
+   {
+    "internalType": "string",
+    "name": "beneficiary",
+    "type": "string"
+   },
+   {
+    "internalType": "string",
+    "name": "purpose",
+    "type": "string"
+   }
+  ],
+  "name": "retireFrom",
+  "outputs": [
+   {
+    "internalType": "uint256",
+    "name": "retirementId",
+    "type": "uint256"
+   }
+  ],
+  "stateMutability": "nonpayable",
+  "type": "function"
+ },
+ {
+  "inputs": [],
+  "name": "retirementCount",
+  "outputs": [
+   {
+    "internalType": "uint256",
+    "name": "",
+    "type": "uint256"
+   }
+  ],
+  "stateMutability": "view",
+  "type": "function"
+ },
+ {
+  "inputs": [
+   {
+    "internalType": "bytes32",
+    "name": "role",
+    "type": "bytes32"
+   },
+   {
+    "internalType": "address",
+    "name": "account",
+    "type": "address"
+   }
+  ],
+  "name": "revokeRole",
+  "outputs": [],
+  "stateMutability": "nonpayable",
+  "type": "function"
+ },
+ {
+  "inputs": [
+   {
+    "internalType": "address",
+    "name": "from",
+    "type": "address"
+   },
+   {
+    "internalType": "address",
+    "name": "to",
+    "type": "address"
+   },
+   {
+    "internalType": "uint256[]",
+    "name": "ids",
+    "type": "uint256[]"
+   },
+   {
+    "internalType": "uint256[]",
+    "name": "values",
+    "type": "uint256[]"
+   },
+   {
+    "internalType": "bytes",
+    "name": "data",
+    "type": "bytes"
+   }
+  ],
+  "name": "safeBatchTransferFrom",
+  "outputs": [],
+  "stateMutability": "nonpayable",
+  "type": "function"
+ },
+ {
+  "inputs": [
+   {
+    "internalType": "address",
+    "name": "from",
+    "type": "address"
+   },
+   {
+    "internalType": "address",
+    "name": "to",
+    "type": "address"
+   },
+   {
+    "internalType": "uint256",
+    "name": "id",
+    "type": "uint256"
+   },
+   {
+    "internalType": "uint256",
+    "name": "value",
+    "type": "uint256"
+   },
+   {
+    "internalType": "bytes",
+    "name": "data",
+    "type": "bytes"
+   }
+  ],
+  "name": "safeTransferFrom",
+  "outputs": [],
+  "stateMutability": "nonpayable",
+  "type": "function"
+ },
+ {
+  "inputs": [
+   {
+    "internalType": "uint64",
+    "name": "serial",
+    "type": "uint64"
+   }
+  ],
+  "name": "serialInfo",
+  "outputs": [
+   {
+    "internalType": "enum ProofOfForest.SerialStatus",
+    "name": "status",
+    "type": "uint8"
+   },
+   {
+    "internalType": "uint256",
+    "name": "batchId",
+    "type": "uint256"
+   },
+   {
+    "internalType": "uint256",
+    "name": "retirementId",
+    "type": "uint256"
+   }
+  ],
+  "stateMutability": "view",
+  "type": "function"
+ },
+ {
+  "inputs": [
+   {
+    "internalType": "address",
+    "name": "operator",
+    "type": "address"
+   },
+   {
+    "internalType": "bool",
+    "name": "approved",
+    "type": "bool"
+   }
+  ],
+  "name": "setApprovalForAll",
+  "outputs": [],
+  "stateMutability": "nonpayable",
+  "type": "function"
+ },
+ {
+  "inputs": [
+   {
+    "internalType": "uint8",
+    "name": "threshold",
+    "type": "uint8"
+   },
+   {
+    "internalType": "int32",
+    "name": "minNetGain_",
+    "type": "int32"
+   },
+   {
+    "internalType": "uint32",
+    "name": "minCoverageBps_",
+    "type": "uint32"
+   },
+   {
+    "internalType": "uint16",
+    "name": "bufferBps_",
+    "type": "uint16"
+   }
+  ],
+  "name": "setPolicy",
+  "outputs": [],
+  "stateMutability": "nonpayable",
+  "type": "function"
+ },
+ {
+  "inputs": [
+   {
+    "components": [
+     {
+      "internalType": "uint256",
+      "name": "projectId",
+      "type": "uint256"
+     },
+     {
+      "internalType": "bytes32",
+      "name": "geometryHash",
+      "type": "bytes32"
+     },
+     {
+      "internalType": "bytes32",
+      "name": "reportHash",
+      "type": "bytes32"
+     },
+     {
+      "internalType": "uint16",
+      "name": "baselineYear",
+      "type": "uint16"
+     },
+     {
+      "internalType": "uint16",
+      "name": "monitoringYear",
+      "type": "uint16"
+     },
+     {
+      "internalType": "int32",
+      "name": "ndviBaseline",
+      "type": "int32"
+     },
+     {
+      "internalType": "int32",
+      "name": "ndviMonitoring",
+      "type": "int32"
+     },
+     {
+      "internalType": "int32",
+      "name": "controlDelta",
+      "type": "int32"
+     },
+     {
+      "internalType": "int32",
+      "name": "netGain",
+      "type": "int32"
+     },
+     {
+      "internalType": "uint32",
+      "name": "validCoverageBps",
+      "type": "uint32"
+     },
+     {
+      "internalType": "uint32",
+      "name": "canopyGainHa100",
+      "type": "uint32"
+     },
+     {
+      "internalType": "uint64",
+      "name": "creditTonnes",
+      "type": "uint64"
+     },
+     {
+      "internalType": "bool",
+      "name": "passed",
+      "type": "bool"
+     },
+     {
+      "internalType": "uint64",
+      "name": "expiry",
+      "type": "uint64"
+     }
+    ],
+    "internalType": "struct ProofOfForest.Attestation",
+    "name": "a",
+    "type": "tuple"
+   },
+   {
+    "internalType": "bytes[]",
+    "name": "signatures",
+    "type": "bytes[]"
+   }
+  ],
+  "name": "submitVerification",
+  "outputs": [
+   {
+    "internalType": "uint256",
+    "name": "verificationId",
+    "type": "uint256"
+   },
+   {
+    "internalType": "enum ProofOfForest.Outcome",
+    "name": "outcome",
+    "type": "uint8"
+   }
+  ],
+  "stateMutability": "nonpayable",
+  "type": "function"
+ },
+ {
+  "inputs": [
+   {
+    "internalType": "bytes4",
+    "name": "interfaceId",
+    "type": "bytes4"
+   }
+  ],
+  "name": "supportsInterface",
+  "outputs": [
+   {
+    "internalType": "bool",
+    "name": "",
+    "type": "bool"
+   }
+  ],
+  "stateMutability": "view",
+  "type": "function"
+ },
+ {
+  "inputs": [],
+  "name": "totalRetired",
+  "outputs": [
+   {
+    "internalType": "uint64",
+    "name": "",
+    "type": "uint64"
+   }
+  ],
+  "stateMutability": "view",
+  "type": "function"
+ },
+ {
+  "inputs": [],
+  "name": "unpause",
+  "outputs": [],
+  "stateMutability": "nonpayable",
+  "type": "function"
+ },
+ {
+  "inputs": [
+   {
+    "internalType": "uint256",
+    "name": "",
+    "type": "uint256"
+   }
+  ],
+  "name": "uri",
+  "outputs": [
+   {
+    "internalType": "string",
+    "name": "",
+    "type": "string"
+   }
+  ],
+  "stateMutability": "view",
+  "type": "function"
+ },
+ {
+  "inputs": [],
+  "name": "verificationCount",
+  "outputs": [
+   {
+    "internalType": "uint256",
+    "name": "",
+    "type": "uint256"
+   }
+  ],
+  "stateMutability": "view",
+  "type": "function"
+ }
+]

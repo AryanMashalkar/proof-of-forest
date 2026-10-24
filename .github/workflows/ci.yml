@@ -1,0 +1,28 @@
+name: CI
+on: [push, pull_request]
+jobs:
+  contracts:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 20 }
+      - run: npm ci --ignore-scripts
+      - run: npx hardhat test
+  engine:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - run: pip install -r engine/requirements.txt
+      - run: cd engine && python -m pytest -q
+      - run: for f in reports/*/report.json; do PYTHONPATH=engine python -m pof_engine check-hash $f; done
+  frontend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 20 }
+      - run: npm ci --ignore-scripts && npx hardhat compile && node scripts/sync-frontend.js
+      - run: cd frontend && npm ci && npm run build

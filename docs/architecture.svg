@@ -1,0 +1,117 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600" font-family="Inter, Segoe UI, Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#2f5d47"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#c0392b"/>
+    </marker>
+    <style>
+      .box{fill:#fff;stroke:#2f5d47;stroke-width:1.6;rx:12}
+      .hd{font-size:15px;font-weight:700;fill:#10261b}
+      .tx{font-size:12px;fill:#36584a}
+      .lane{font-size:11px;font-weight:700;letter-spacing:.12em;fill:#6b8a7c}
+      .ln{stroke:#2f5d47;stroke-width:1.8;fill:none;marker-end:url(#a)}
+      .lb{font-size:11px;fill:#2f5d47;font-style:italic}
+    </style>
+  </defs>
+  <rect width="1200" height="600" fill="#f6faf7"/>
+  <!-- lanes -->
+  <rect x="10" y="10" width="370" height="580" rx="16" fill="#eaf4ee"/>
+  <rect x="400" y="10" width="370" height="580" rx="16" fill="#eef2fb"/>
+  <rect x="790" y="10" width="400" height="580" rx="16" fill="#f8f1e7"/>
+  <text x="30" y="36" class="lane">MEASURE · off-chain, reproducible</text>
+  <text x="420" y="36" class="lane">ATTEST · oracle committee</text>
+  <text x="810" y="36" class="lane">SETTLE · ProofOfForest.sol (ERC-1155)</text>
+
+  <!-- measure -->
+  <rect class="box" x="30" y="56" width="330" height="92"/>
+  <text x="46" y="80" class="hd">Copernicus Sentinel-2 L2A</text>
+  <text x="46" y="100" class="tx">Free 10 m imagery, 5-day revisit</text>
+  <text x="46" y="117" class="tx">AWS Open Data COGs + STAC item metadata</text>
+  <text x="46" y="134" class="tx">(per-band scale/offset, cloud statistics)</text>
+
+  <rect class="box" x="30" y="186" width="330" height="214"/>
+  <text x="46" y="210" class="hd">Verification engine (Python)</text>
+  <text x="46" y="232" class="tx">1. Windowed reads of only the project area</text>
+  <text x="46" y="250" class="tx">2. Scene Classification Layer mask: cloud,</text>
+  <text x="62" y="266" class="tx">shadow, cirrus, water, no-data removed</text>
+  <text x="46" y="284" class="tx">3. Same-season median NDVI composites</text>
+  <text x="46" y="302" class="tx">4. Control ring 300–1500 m around polygon</text>
+  <text x="46" y="320" class="tx">5. Difference-in-differences net gain</text>
+  <text x="46" y="338" class="tx">6. Scene-pair robustness (P10) + uncertainty</text>
+  <text x="62" y="354" class="tx">deduction → conservative tCO2e</text>
+  <text x="46" y="376" class="tx">Checks: coverage ≥80%, gain ≥+0.05,</text>
+  <text x="62" y="392" class="tx">P10 ≥+0.025, extra canopy ≥1 ha</text>
+
+  <rect class="box" x="30" y="436" width="330" height="134"/>
+  <text x="46" y="460" class="hd">Evidence package</text>
+  <text x="46" y="482" class="tx">report.json (canonical JSON)</text>
+  <text x="46" y="500" class="tx">reportHash = keccak256(report)</text>
+  <text x="46" y="518" class="tx">polygon hash, scene IDs, all parameters</text>
+  <text x="46" y="536" class="tx">evidence PNGs bound by SHA-256</text>
+  <text x="46" y="554" class="tx">anyone can re-run and must match the hash</text>
+
+  <path class="ln" d="M195 148 V184"/>
+  <path class="ln" d="M195 400 V434"/>
+
+  <!-- attest -->
+  <rect class="box" x="420" y="186" width="330" height="214"/>
+  <text x="436" y="210" class="hd">3 independent oracle nodes</text>
+  <text x="436" y="232" class="tx">Each node independently:</text>
+  <text x="446" y="252" class="tx">• recomputes the report hash</text>
+  <text x="446" y="270" class="tx">• re-derives every signed number</text>
+  <text x="446" y="288" class="tx">• refuses to sign on any mismatch</text>
+  <text x="446" y="306" class="tx">• signs an EIP-712 Attestation bound to</text>
+  <text x="458" y="322" class="tx">chainId + contract address + expiry</text>
+  <text x="436" y="350" class="tx">Threshold: 2-of-3, signers sorted to</text>
+  <text x="436" y="366" class="tx">block duplicate-signature attacks</text>
+  <g transform="translate(436 378)">
+    <circle cx="8" cy="8" r="8" fill="#3ee08f"/><circle cx="30" cy="8" r="8" fill="#3ee08f"/><circle cx="52" cy="8" r="8" fill="#cfd8d3"/>
+  </g>
+
+  <rect class="box" x="420" y="436" width="330" height="134"/>
+  <text x="436" y="460" class="hd">Permissionless relayer</text>
+  <text x="436" y="482" class="tx">Anyone (developer, buyer, auditor) submits</text>
+  <text x="436" y="500" class="tx">attestation + signatures.</text>
+  <text x="436" y="520" class="tx">Credits always mint to the registered</text>
+  <text x="436" y="538" class="tx">developer, so front-running gains nothing.</text>
+
+  <path class="ln" d="M360 503 C390 503 390 293 418 293"/>
+  <text x="372" y="420" class="lb" transform="rotate(-90 372 420)">publish</text>
+  <path class="ln" d="M585 400 V434"/>
+
+  <!-- settle -->
+  <rect class="box" x="810" y="56" width="360" height="104"/>
+  <text x="826" y="80" class="hd">Project registry</text>
+  <text x="826" y="100" class="tx">Polygon hash unique: the same land cannot</text>
+  <text x="826" y="117" class="tx">be registered twice. Baseline year locked at</text>
+  <text x="826" y="134" class="tx">registration; crediting periods contiguous,</text>
+  <text x="826" y="151" class="tx">never overlapping (no double issuance).</text>
+
+  <rect class="box" x="810" y="186" width="360" height="150"/>
+  <text x="826" y="210" class="hd">submitVerification()</text>
+  <text x="826" y="232" class="tx">✓ 2-of-3 oracle signatures, unexpired, unused</text>
+  <text x="826" y="250" class="tx">✓ on-chain policy re-check (defence in depth):</text>
+  <text x="842" y="266" class="tx">net gain, coverage, credits &gt; 0</text>
+  <text x="826" y="288" class="tx">Pass → mint batch, unique serial range,</text>
+  <text x="842" y="304" class="tx">20% withheld in buffer pool</text>
+  <text x="826" y="326" class="tx">Fail → rejection recorded on-chain forever</text>
+
+  <rect class="box" x="810" y="362" width="360" height="100"/>
+  <text x="826" y="386" class="hd">Trade → retire()</text>
+  <text x="826" y="408" class="tx">ERC-1155 transfers until retired. retire() burns</text>
+  <text x="826" y="425" class="tx">tokens and assigns the next serials to a named</text>
+  <text x="826" y="442" class="tx">beneficiary: each tonne is claimable exactly once.</text>
+
+  <rect class="box" x="810" y="488" width="360" height="82"/>
+  <text x="826" y="512" class="hd">Reversals (fire, clearing)</text>
+  <text x="826" y="534" class="tx">2-of-3 reversal attestation cancels buffer serials;</text>
+  <text x="826" y="551" class="tx">uncovered loss freezes the project's issuance.</text>
+
+  <path class="ln" d="M750 503 C780 503 780 261 808 261"/>
+  <text x="772" y="440" class="lb" transform="rotate(-90 772 440)">attestation</text>
+  <path class="ln" d="M990 160 V184"/>
+  <path class="ln" d="M990 336 V360"/>
+  <path d="M1176 529 C1196 529 1196 230 1172 230" stroke="#c0392b" stroke-width="1.6" fill="none" stroke-dasharray="5 4" marker-end="url(#r)"/>
+</svg>
