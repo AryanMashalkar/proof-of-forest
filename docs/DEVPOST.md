@@ -8,7 +8,7 @@
 
 **Track:** Carbon Markets & Emissions Transparency
 
-**Links:** GitHub `<https://github.com/<you>/proof-of-forest>` · Demo video (4:05) · Testnet contract `<address on Polygon Amoy>`
+**Links:** GitHub `<https://github.com/<you>/proof-of-forest>` · Demo video (4:48) · Testnet contract `<address on Polygon Amoy>`
 
 ---
 
