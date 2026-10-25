@@ -64,7 +64,7 @@ export async function detectChainId(): Promise<string> {
     }
   }
   // hosted build (e.g. GitHub Pages) without a wallet: show the public testnet deployment read-only
-  return ["localhost", "127.0.0.1"].includes(location.hostname) ? "31337" : "80002";
+  return ["localhost", "127.0.0.1"].includes(location.hostname) ? "31337" : "11155111";
 }
 
 export async function switchChain(chainId: string) {

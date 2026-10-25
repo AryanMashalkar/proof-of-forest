@@ -150,7 +150,7 @@ npm run frontend            # open http://localhost:5173 with MetaMask on Amoy
 
 The first testnet deploy generates three oracle keys into `.env.oracles` (git-ignored). The deployment record (contract address, transactions, signed attestations) is written to `frontend/public/deployments/<chainId>.json`.
 
-**Testnet deployment:** see [`frontend/public/deployments/`](frontend/public/deployments) for the live contract address and transaction hashes.
+**Testnet deployment:** [`0x0981c8D03882e5B3D76Ed65adD15D2eb818B8aCa`](https://sepolia.etherscan.io/address/0x0981c8D03882e5B3D76Ed65adD15D2eb818B8aCa) on Ethereum Sepolia (2-of-3 oracle committee). The full record (transactions, signed attestations) is in [`frontend/public/deployments/`](frontend/public/deployments).
 
 ## Tests
 
