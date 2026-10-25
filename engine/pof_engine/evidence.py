@@ -124,4 +124,22 @@ def render(out: Path, nb, nm, rgb_b, rgb_m, inside, ring, report) -> list[str]:
     ax.set_title(f'project ΔNDVI {r["projectDelta"]:+.3f}   control ΔNDVI {r["controlDelta"]:+.3f}', fontsize=10)
     _save(fig, out / "ndvi_histogram.png")
     files.append("ndvi_histogram.png")
+
+    # placebo test: the project's net gain against the same polygon dropped at random in the landscape
+    v = report.get("validation") or {}
+    if v.get("placeboNetGains"):
+        fig = plt.figure(figsize=(6.4, 3.2))
+        ax = fig.add_axes([0.1, 0.18, 0.86, 0.72])
+        pl = np.array(v["placeboNetGains"])
+        lo, hi = min(pl.min(), r["netGain"]) - 0.02, max(pl.max(), r["netGain"]) + 0.02
+        ax.hist(pl, bins=np.linspace(lo, hi, 41), color="#9aa5b1", label=f"{len(pl)} random placebo polygons")
+        ax.axvline(r["netGain"], color="#1f8a4c" if report["passed"] else "#c0392b", lw=2.5, label="this project")
+        ax.axvline(report["params"]["min_net_gain"], color="#444", ls="--", lw=1, label="issuance threshold")
+        ax.set_xlabel("NDVI gain beyond control ring (difference-in-differences)")
+        ax.legend(frameon=False, fontsize=8)
+        for s_ in ("top", "right"):
+            ax.spines[s_].set_visible(False)
+        ax.set_title(f'placebo p = {v["placeboPValue"]:.3f}   random land above gain threshold {v["placeboFalsePositiveRate"]:.1%}', fontsize=10)
+        _save(fig, out / "placebo_test.png")
+        files.append("placebo_test.png")
     return files

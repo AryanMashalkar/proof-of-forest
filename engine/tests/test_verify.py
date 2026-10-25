@@ -127,3 +127,39 @@ def test_report_hash_is_reproducible(monkeypatch, tmp_path):
     f.write_text(json.dumps(rep, indent=2))
     bad = subprocess.run([sys.executable, "-m", "pof_engine", "check-hash", str(f)], capture_output=True, text=True, cwd=Path(__file__).parents[1])
     assert bad.returncode == 1
+
+
+def test_seasonal_grass_is_not_credited_as_forest(monkeypatch):
+    # green in the monitoring window, brown again in the following dry season: rain-fed grass or crops
+    install(monkeypatch, lambda y, inside, r: np.where(inside & (y == 2025), 0.6, 0.15))
+    rep = V.verify(project(monitoring={"year": 2025, "months": [3, 4]}, drySeason={"year": 2026, "months": [3, 4]}))
+    dry = next(c for c in rep["checks"] if c["id"] == "dryPersistence")
+    assert dry["value"] < 0.05 and dry["pass"] is False
+    assert rep["results"]["additionalCanopyHa"] == 0
+    assert rep["passed"] is False
+
+
+def test_placebo_and_boundary_checks(monkeypatch):
+    install(monkeypatch, lambda y, inside, r: np.where(inside & (y == 2025), 0.6, 0.15))
+    rep = V.verify(project())
+    v = rep["validation"]
+    assert v["placeboCount"] == V.Params().placebo_count
+    assert v["placeboPValue"] == pytest.approx(1 / (1 + v["placeboCount"]), abs=1e-4)  # beats every random copy
+    assert v["placeboFalsePositiveRate"] == 0
+    assert set(v["boundaryNetGain"]) == {"erode20m", "dilate20m", "shiftN20m", "shiftS20m", "shiftE20m", "shiftW20m"}
+    assert all(c["pass"] for c in rep["checks"] if c["id"] in ("placebo", "boundary"))
+
+
+def test_oracle_reproduce_detects_any_edit(monkeypatch):
+    from pof_engine.__main__ import reproduce
+
+    growth = lambda y, inside, r: np.where(inside & (y == 2025), 0.6, 0.15)  # noqa: E731
+    install(monkeypatch, growth)
+    rep = json.loads(json.dumps(V.verify(project())))
+    install(monkeypatch, growth)  # same synthetic "archive" again (the noise generator is re-seeded)
+    assert reproduce(rep) == []
+    rep["results"]["netGain"] = 0.9
+    rep["params"]["min_net_gain"] = 0.0
+    assert reproduce(rep)[0].startswith("params")
+    rep["params"]["min_net_gain"] = V.Params().min_net_gain
+    assert any(d.startswith("results.netGain") for d in reproduce(rep))

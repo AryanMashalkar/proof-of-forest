@@ -218,6 +218,50 @@ export function ProjectPage({ id }: { id: string }) {
         </div>
       </div>
 
+      {report.validation && (
+        <Card title="Could this be luck, a cherry-picked boundary, or just grass?" right={<span className="muted small">method v1.1 validation</span>}>
+          <div className="two validation">
+            <div>
+              <img className="placebo" src={`reports/${id}/placebo_test.png`} alt="placebo test histogram" />
+              <p className="small muted">
+                The same polygon, randomly rotated and dropped {report.validation.placeboCount} times across the surrounding 5 km, analysed exactly like the project. The best random copy gained{" "}
+                {report.validation.placeboNetGainMax >= 0 ? "+" : ""}
+                {report.validation.placeboNetGainMax.toFixed(3)}; this project {(r.netGain as number) >= 0 ? "+" : ""}
+                {(r.netGain as number).toFixed(3)}.
+              </p>
+            </div>
+            <table className="kv">
+              <tbody>
+                <tr>
+                  <td>Placebo p-value (project beats random land)</td>
+                  <td>{report.validation.placeboPValue.toFixed(3)}</td>
+                </tr>
+                <tr>
+                  <td>Random land that would pass the gain threshold alone</td>
+                  <td>{pct(report.validation.placeboFalsePositiveRate)}</td>
+                </tr>
+                {Object.entries(report.validation.boundaryNetGain).map(([k, g]) => (
+                  <tr key={k}>
+                    <td>Boundary {k.replace(/(\d+)m$/, " $1 m").replace("shift", "shifted ").replace("erode", "shrunk").replace("dilate", "grown")}</td>
+                    <td>
+                      {g >= 0 ? "+" : ""}
+                      {g.toFixed(3)}
+                    </td>
+                  </tr>
+                ))}
+                <tr>
+                  <td>
+                    New canopy still green in the dry season
+                    {report.data.drySeason ? ` (${months(report.data.drySeason.months)} ${report.data.drySeason.year})` : ""}
+                  </td>
+                  <td>{pct(report.validation.drySeasonPersistence)}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </Card>
+      )}
+
       <div className="two">
         <Card title="Credit calculation">
           <table className="kv">
@@ -674,12 +718,13 @@ export function HowItWorks() {
         <Card title="2 · Attribute">
           <p>
             <b>Difference-in-differences</b>: project NDVI change minus control NDVI change. Rain, irrigation and sensor effects hit both and cancel. Robustness is checked across every baseline × monitoring scene pair, and
-            credits are cut by the measured uncertainty.
+            credits are cut by the measured uncertainty. Then it tries to prove itself wrong: a <b>placebo test</b> against 200 random copies of the polygon nearby, 20 m <b>boundary shifts</b>, and a{" "}
+            <b>dry-season check</b> so only woody canopy counts, not grass or crops.
           </p>
         </Card>
         <Card title="3 · Attest & settle">
           <p>
-            Independent oracles re-hash the published report and sign an <b>EIP-712</b> attestation. The contract needs 2 of 3 signatures, re-checks the numbers against its own policy, mints numbered ERC-1155 credits,
+            Independent oracles each <b>re-run the whole analysis from raw ESA data</b>, refuse unless every number matches, and sign an <b>EIP-712</b> attestation. The contract needs 2 of 3 signatures, re-checks the numbers against its own policy, mints numbered ERC-1155 credits,
             holds 20% in a buffer pool, and burns credits on retirement.
           </p>
         </Card>

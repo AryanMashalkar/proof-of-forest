@@ -30,20 +30,24 @@ ProofOfForest replaces "trust the auditor" with evidence anyone can re-run and a
 | Layer | What it does | Why it is hard to fool |
 |---|---|---|
 | **Measure** (Python engine) | Reads only the project's pixels from every Sentinel-2 L2A scene in the same season of two years, masks clouds/shadow/water, builds median NDVI composites, and compares the project polygon with a **control ring** 300–1500 m around it (difference-in-differences). | Region-wide effects (monsoon, irrigation, sensor changes) hit project and control alike and cancel. The gain must also survive the pessimistic 10th percentile of all scene pairs. |
-| **Attest** (oracle committee) | Three oracle nodes recompute the report hash, re-derive every number, and sign an EIP-712 attestation. | 2-of-3 threshold, domain-separated, expiring, single-use. One stolen key cannot mint. |
+| **Attest** (oracle committee) | Three independent oracle nodes each **re-run the whole satellite analysis from raw ESA data**, refuse unless every number matches, and sign an EIP-712 attestation with their own key. | 2-of-3 threshold, domain-separated, expiring, single-use. One stolen key cannot mint. |
 | **Settle** (`ProofOfForest.sol`) | Verifies signatures, **re-checks the numbers against on-chain policy**, mints ERC-1155 credits with a unique serial range, withholds 20% in a buffer pool, records rejections forever, and burns credits on `retire()`. | Each serial is assigned exactly once. Retired tonnes cannot move again. Same land cannot be registered twice; crediting periods cannot overlap. |
 
 ## Real results on real satellite data
 
 All three case studies run the same unmodified method on public Sentinel-2 L2A data (6 cloud-masked scenes per window, 10 m pixels). Reports, scene IDs and evidence images are committed in [`reports/`](reports).
 
-| Case | Claim | Project ΔNDVI | Control ΔNDVI | **Net gain** | Verdict |
-|---|---|---|---|---|---|
-| **Smritivan, Bhuj (Gujarat)** · 31.5 ha · Mar–Apr 2019 → 2025 | Miyawaki forest planted on the barren slopes of Bhujiyo Hill | +0.294 | +0.069 | **+0.224** | ✅ **541 tCO2e** issued (109 to buffer) |
-| **"Green Hasdeo" (Chhattisgarh)** · 365 ha · Jan–Feb 2019 → 2025 | *Hypothetical fraud:* "reforestation" on land actually cleared for an open-cast coal mine | −0.466 | +0.018 | **−0.484** | ❌ Rejected on-chain |
-| **"Banni Regreening" (Kutch)** · 277 ha · Oct–Nov 2018 → 2020 | *Hypothetical greenwashing:* takes credit for greening caused by a drought year followed by a wet monsoon | **+0.483** | +0.477 | **+0.006** | ❌ Rejected, although a naive before/after check would have **passed** |
+| Case | Claim | Project ΔNDVI | Control ΔNDVI | **Net gain** | Placebo p | Dry-season persistence | Verdict |
+|---|---|---|---|---|---|---|---|
+| **Smritivan, Bhuj (Gujarat)** · 31.5 ha · Mar–Apr 2019 → 2025 | Miyawaki forest planted on the barren slopes of Bhujiyo Hill | +0.294 | +0.069 | **+0.224** | **0.005** (beats all 200 random copies) | 100% | ✅ **541 tCO2e** issued (109 to buffer) |
+| **"Green Hasdeo" (Chhattisgarh)** · 365 ha · Jan–Feb 2019 → 2025 | *Hypothetical fraud:* "reforestation" on land actually cleared for an open-cast coal mine | −0.466 | +0.018 | **−0.484** | 1.0 | 21% | ❌ Rejected on-chain |
+| **"Banni Regreening" (Kutch)** · 277 ha · Oct–Nov 2018 → 2020 | *Hypothetical greenwashing:* takes credit for greening caused by a drought year followed by a wet monsoon | **+0.483** | +0.477 | **+0.006** | 0.567 | 34% (grass) | ❌ Rejected, although a naive before/after check would have **passed** |
 
-The Banni case is the point: NDVI inside the polygon jumped by almost half, and a simple "before vs after" verifier would have issued hundreds of credits. ProofOfForest looks at the landscape around it, sees the same jump everywhere, and credits nothing.
+The Banni case is the point: NDVI inside the polygon jumped by almost half, and a simple "before vs after" verifier would have issued hundreds of credits. ProofOfForest looks at the landscape around it, sees the same jump everywhere, and credits nothing. It fails four independent ways: no gain beyond the control ring, no better than random land (placebo p = 0.57), the greening browns off again in the next dry season (grass, not trees), and no robust scene-pair gain.
+
+<p align="center"><img src="docs/img/validation-smritivan.png" width="49%" alt="Smritivan placebo and boundary tests"> <img src="docs/img/validation-banni.png" width="49%" alt="Banni placebo and boundary tests"></p>
+
+**Independently reproduced.** Each report was re-run from scratch, with an empty cache, straight from the ESA archive, by the same command every oracle runs before signing (`python -m pof_engine reproduce`). All three came back identical: every number, check and verdict.
 
 <p align="center"><img src="docs/img/project-banni.png" width="49%" alt="Banni greenwashing caught"> <img src="docs/img/project-smritivan.png" width="49%" alt="Smritivan verified"></p>
 
@@ -57,7 +61,7 @@ The video walks through: the three projects → satellite evidence (drag-to-comp
 
 ![Architecture](docs/architecture.png)
 
-### 1. Measurement: `POF-NDVI-DiD-v1` ([engine/pof_engine/verify.py](engine/pof_engine/verify.py))
+### 1. Measurement: `POF-NDVI-DiD-v1.1` ([engine/pof_engine/verify.py](engine/pof_engine/verify.py))
 
 1. **Scene discovery** straight from the public `sentinel-cogs` bucket (AWS Open Data). No API keys. Each scene's STAC item gives cloud statistics and the band scale/offset.
 2. **Windowed reads**: only the pixels around the project are downloaded (a few MB per scene).
@@ -66,13 +70,31 @@ The video walks through: the three projects → satellite evidence (drag-to-comp
 5. **Composites**: the clearest ≤ 6 scenes over the polygon per window, per-pixel median NDVI. Baseline and monitoring windows must cover the same months (phenology).
 6. **Difference-in-differences**: `net gain = (project NDVI change) − (control ring NDVI change)`.
 7. **Robustness**: DiD recomputed for every baseline × monitoring scene pair; the 10th percentile must stay ≥ +0.025.
-8. **Credits (conservative)**: additional canopy area (share of 10 m pixels with NDVI ≥ 0.40, minus the control trend) × 7 tCO2e/ha/yr × years × (1 − uncertainty deduction). The deduction is the relative spread between median and P10 scene-pair gain, bounded to 10–50%.
-9. **Checks**: coverage ≥ 80%, ≥ 2 clear scenes per window, net gain ≥ +0.05, P10 ≥ +0.025, additional canopy ≥ 1 ha. All must pass.
-10. **Report**: canonical JSON with every parameter, scene ID and result, SHA-256 of every evidence image, and `reportHash = keccak256(report)`. Anyone can re-run and must reproduce the hash.
+8. **Woody canopy only**: trees stay green through the dry season; rain-fed grass and crops do not. A pixel only counts as canopy if it is above NDVI 0.40 in the monitoring window **and** in the following dry season, and ≥ 60% of the new canopy must persist.
+9. **Boundary sensitivity**: the polygon is shrunk, grown and shifted N/S/E/W by 20 m (two pixels, typical digitising/GPS error). The gain must hold in every variant, so the verdict never hinges on exactly where the line was drawn.
+10. **Placebo test**: the same polygon is randomly rotated and dropped 200 times in the surrounding 5 km (seeded by the polygon hash, so reproducible) and analysed exactly like the project. The project must out-gain at least 95% of them (p ≤ 0.05). This answers "was this boundary picked because it happened to green?": random land around Smritivan peaks at +0.10, the project is +0.22.
+11. **Credits (conservative)**: additional *woody* canopy area (beyond the control trend) × 7 tCO2e/ha/yr × years × (1 − uncertainty deduction). The deduction is the relative spread between median and P10 scene-pair gain, bounded to 10–50%. NDVI only decides *where* new tree canopy exists, never how many tonnes; the removal factor is a per-ecozone parameter inside the signed report, so a registry can substitute its own field-calibrated value.
+12. **Checks**: coverage ≥ 80%, ≥ 2 clear scenes per window, net gain ≥ +0.05, P10 ≥ +0.025, additional woody canopy ≥ 1 ha, dry-season persistence ≥ 60%, boundary-variant gain ≥ +0.05, placebo p ≤ 0.05. All must pass.
+13. **Report**: canonical JSON with every parameter, scene ID and result, SHA-256 of every evidence image, and `reportHash = keccak256(report)`. Anyone can re-run and must reproduce the hash.
 
-### 2. Attestation: [oracle/attestation.ts](oracle/attestation.ts)
+### 2. Attestation: [oracle/node.ts](oracle/node.ts), [oracle/attestation.ts](oracle/attestation.ts)
 
-Each oracle node independently recomputes the report hash from the report body, re-derives the signed fields (never trusting the report's own summary), checks that the verdict matches the checks, and signs:
+Each oracle is a separate operator with its own key on its own machine. Before signing, the node:
+
+1. **re-runs the entire satellite analysis from the raw ESA archive** (`python -m pof_engine reproduce`) and refuses unless every result, check and verdict matches the published report, and the method parameters are the standard ones;
+2. recomputes the report hash byte-for-byte and re-derives every signed field (never trusting the report's own summary);
+3. checks on-chain that the project is registered with exactly this polygon and that its key holds `ORACLE_ROLE`.
+
+It writes one signature file. Anyone can then combine the files and relay them; the combiner checks every file signs the identical attestation.
+
+```bash
+ORACLE_PRIVATE_KEY=0x… npx ts-node oracle/node.ts sign   --report reports/smritivan-bhuj/report.json \
+    --project-id 1 --expiry 1767225600 --chain-id 80002 --contract 0x… --rpc https://rpc-amoy.polygon.technology
+PRIVATE_KEY=0x…        npx ts-node oracle/node.ts submit --report reports/smritivan-bhuj/report.json \
+    --chain-id 80002 --contract 0x… --rpc https://rpc-amoy.polygon.technology
+```
+
+So a lazy or compromised oracle cannot simply co-sign: it has to agree with two independent recomputations from public data, and the contract still re-checks the numbers. In the hackathon demo the three nodes run on one laptop; in production they would be a registry, an auditor and a university remote-sensing lab (the admin adds and removes `ORACLE_ROLE` holders, behind a multisig and timelock). The signed message:
 
 ```
 Attestation(uint256 projectId, bytes32 geometryHash, bytes32 reportHash, uint16 baselineYear,
@@ -101,7 +123,7 @@ Requirements: Node.js 18+ (and Python 3.10+ only if you want to re-run the satel
 ```bash
 git clone <this repo> && cd proof-of-forest
 npm install            # also installs the frontend
-npm test               # 37 contract + end-to-end tests
+npm test               # 41 contract, oracle-node and end-to-end tests
 npm run demo           # local chain + contract + 3 projects + dApp at http://localhost:5173
 ```
 
@@ -112,7 +134,8 @@ In the demo, the account menu (top right) switches between **Project developer**
 ```bash
 pip install -r engine/requirements.txt
 npm run verify:all     # or: PYTHONPATH=engine python -m pof_engine verify projects/banni-rain.json
-cd engine && python -m pytest -q   # 8 engine tests on synthetic scenes
+cd engine && python -m pytest -q   # 11 engine tests on synthetic scenes
+python -m pof_engine reproduce ../reports/smritivan-bhuj/report.json   # independent re-run, what oracles do
 ```
 
 Each run downloads ~100 MB of public imagery and takes 1–2 minutes per project. `python -m pof_engine check-hash reports/<id>/report.json` verifies a published report.
@@ -134,8 +157,8 @@ The first testnet deploy generates three oracle keys into `.env.oracles` (git-ig
 | Suite | What it proves |
 |---|---|
 | `test/ProofOfForest.test.ts` (33) | registry, 2-of-3 signatures, tampering, cross-chain replay, report replay, expiry, crediting-period locks, on-chain policy re-check, buffer rounding, serial assignment, retire / retireFrom, pause semantics, reversals and shortfalls, plus a randomised invariant test (no serial ever assigned twice, supply always reconciles) |
-| `test/EndToEnd.test.ts` (4) | the three **real** Sentinel-2 reports go through the oracle signer into the contract: Smritivan mints, Hasdeo and Banni are rejected; an edited report is refused by the oracle |
-| `engine/tests/test_verify.py` (8) | real growth passes; clearing, region-wide rain greening and cloud-covered evidence are rejected; seasons must match; geometry hashes are canonical; uncertainty deduction is bounded; report hashes are reproducible and detect tampering |
+| `test/EndToEnd.test.ts` (8) | the three **real** Sentinel-2 reports go through the oracle signer into the contract: Smritivan mints, Hasdeo and Banni are rejected; an edited report is refused; independent oracle nodes sign separately and anyone combines and relays; a node refuses when its own re-run disagrees or the on-chain polygon differs; mismatched or forged signature files cannot be combined |
+| `engine/tests/test_verify.py` (11) | real growth passes; clearing, region-wide rain greening, seasonal grass (green, then brown in the dry season) and cloud-covered evidence are rejected; placebo and boundary checks; seasons must match; geometry hashes are canonical; uncertainty deduction is bounded; report hashes are reproducible and detect tampering; the oracle `reproduce` step catches any edited number or non-standard parameter |
 
 Gas (Hardhat, optimizer on): `submitVerification` ≈ 213k–416k, `retire` ≈ 177k–232k, `registerProject` ≈ 146k–168k.
 
@@ -148,7 +171,7 @@ Gas (Hardhat, optimizer on): `submitVerification` ≈ 213k–416k, `retire` ≈ 
 
 ## Honest limitations
 
-NDVI measures green canopy, not biomass; the removal factor is a conservative default rather than project-specific allometry; 10 m pixels under-credit very young plantations; the demo's three oracle keys are held by one operator; and the case-study polygons are digitised from imagery for demonstration (two are explicitly hypothetical fraud scenarios). These figures are **method demonstrations, not certified offsets**. See [docs/THREAT_MODEL.md](docs/THREAT_MODEL.md) for the full list and mitigations.
+NDVI locates new woody canopy; it does not weigh it. The tonnes come from a conservative, configurable removal factor rather than project-specific allometry or field plots (next step: GEDI canopy height and plot calibration). 10 m pixels under-credit very young plantations. The oracle node software is built for independent operators, but in this demo all three run on one laptop. The case-study polygons are digitised from imagery for demonstration (two are explicitly hypothetical fraud scenarios); the placebo and boundary tests exist precisely so that a hand-drawn boundary cannot manufacture a result. These figures are **method demonstrations, not certified offsets**. See [docs/THREAT_MODEL.md](docs/THREAT_MODEL.md) for the full list and mitigations.
 
 ## Repository layout
 
@@ -156,6 +179,7 @@ NDVI measures green canopy, not biomass; the removal factor is a conservative de
 contracts/ProofOfForest.sol     ERC-1155 credits, oracle verification, serials, retirement, buffer pool
 engine/pof_engine/              Sentinel-2 catalog, windowed COG reads, NDVI DiD method, evidence images
 oracle/attestation.ts           report re-hashing + EIP-712 signing (2-of-3 committee)
+oracle/node.ts                  independent oracle node: re-run from raw data, sign, combine, submit
 projects/*.json                 project polygons and observation windows
 reports/<id>/                   signed-off verification reports + evidence images (real data)
 scripts/                        deploy, one-command demo, verify-all, frontend sync

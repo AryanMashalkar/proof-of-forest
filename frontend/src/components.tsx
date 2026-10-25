@@ -113,6 +113,9 @@ export function Checks({ report }: { report: Report }) {
     if (c.id === "coverage") return `${(c.value * 100).toFixed(1)}% ≥ ${c.threshold * 100}%`;
     if (c.id === "netGain" || c.id === "robustness") return `${c.value >= 0 ? "+" : ""}${c.value.toFixed(3)} ≥ +${c.threshold}`;
     if (c.id === "canopy") return `${c.value} ha ≥ ${c.threshold} ha`;
+    if (c.id === "boundary") return `worst ${c.value >= 0 ? "+" : ""}${c.value.toFixed(3)} ≥ +${c.threshold}`;
+    if (c.id === "dryPersistence") return `${(c.value * 100).toFixed(0)}% ≥ ${c.threshold * 100}%`;
+    if (c.id === "placebo") return `p = ${c.value.toFixed(3)} ≤ ${c.threshold}`;
     return `${c.value} ≥ ${c.threshold}`;
   };
   return (

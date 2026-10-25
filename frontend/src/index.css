@@ -986,3 +986,12 @@ table.kv {
     grid-column: span 1;
   }
 }
+
+.validation {
+  align-items: start;
+}
+.validation img.placebo {
+  width: 100%;
+  border-radius: 8px;
+  background: #fff;
+}

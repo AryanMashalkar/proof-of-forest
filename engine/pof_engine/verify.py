@@ -22,13 +22,14 @@ from eth_hash.auto import keccak
 from pyproj import Transformer
 from rasterio.features import geometry_mask
 from rasterio.transform import from_origin
+from shapely import affinity
 from shapely.geometry import mapping, shape
 from shapely.ops import transform as shp_transform
 
 from .catalog import Scene, mgrs_tile, scenes
 from .raster import ndvi, read_scene
 
-METHOD_ID = "POF-NDVI-DiD-v1"
+METHOD_ID = "POF-NDVI-DiD-v1.1"
 
 
 @dataclass(frozen=True)
@@ -46,6 +47,12 @@ class Params:
     removal_tco2_ha_yr: float = 7.0  # conservative Tier-1 style default removal factor (configurable per ecozone)
     min_uncertainty_deduction: float = 0.10
     max_uncertainty_deduction: float = 0.50
+    # v1.1 validation: is the result special to this polygon, robust to its exact boundary, and woody?
+    placebo_count: int = 200  # random same-shape polygons in the surrounding landscape
+    placebo_radius_m: float = 5000.0  # placebo centroids lie within this distance of the project
+    max_placebo_p: float = 0.05  # project must out-gain at least 95% of placebos
+    boundary_jitter_m: float = 20.0  # +-2 pixels: digitising / GPS error of a submitted boundary
+    min_dry_persistence: float = 0.60  # share of monitoring canopy still canopy in the dry season
 
 
 # ----------------------------------------------------------------------------- canonical hashing
@@ -89,7 +96,8 @@ class WindowResult:
 def _grid(geom_wgs84, epsg: int, p: Params):
     to_utm = Transformer.from_crs(4326, epsg, always_xy=True).transform
     poly = shp_transform(to_utm, geom_wgs84)
-    minx, miny, maxx, maxy = poly.buffer(p.control_outer_m + 2 * p.pixel_m).bounds
+    reach = p.control_outer_m + (p.placebo_radius_m + _radius(poly) if p.placebo_count else 0.0)
+    minx, miny, maxx, maxy = poly.buffer(reach + 2 * p.pixel_m).bounds
     minx, miny = math.floor(minx / p.pixel_m) * p.pixel_m, math.floor(miny / p.pixel_m) * p.pixel_m
     maxx, maxy = math.ceil(maxx / p.pixel_m) * p.pixel_m, math.ceil(maxy / p.pixel_m) * p.pixel_m
     width, height = int(round((maxx - minx) / p.pixel_m)), int(round((maxy - miny) / p.pixel_m))
@@ -98,6 +106,29 @@ def _grid(geom_wgs84, epsg: int, p: Params):
     ring_geom = poly.buffer(p.control_outer_m).difference(poly.buffer(p.control_inner_m))
     ring = geometry_mask([mapping(ring_geom)], (height, width), tr, invert=True)
     return poly, ring_geom, (minx, miny, maxx, maxy), (height, width), tr, inside, ring
+
+
+def _radius(poly) -> float:
+    c = poly.centroid
+    return max(c.distance(type(c)(x, y)) for x, y in poly.exterior.coords)
+
+
+def _masks(poly, shp, tr, p: Params, exclude=None):
+    """Inside mask and control-ring mask of a polygon on the analysis grid."""
+    inside = geometry_mask([mapping(poly)], shp, tr, invert=True)
+    ring = geometry_mask([mapping(poly.buffer(p.control_outer_m).difference(poly.buffer(p.control_inner_m)))], shp, tr, invert=True)
+    if exclude is not None:
+        ring &= ~exclude
+    return inside, ring
+
+
+def _did(nb, nm, inside, ring, both):
+    """Composite difference-in-differences of mean NDVI: (project change) - (control change)."""
+    pin, rin = inside & both, ring & both
+    if not pin.any() or not rin.any():
+        return float("nan"), 0.0
+    net = (nm[pin].mean() - nb[pin].mean()) - (nm[rin].mean() - nb[rin].mean())
+    return float(net), float(both[inside].mean())
 
 
 def _composite(scene_list: list[Scene], bounds, shp, inside, ring, p: Params, want_rgb: bool):
@@ -134,7 +165,7 @@ def _composite(scene_list: list[Scene], bounds, shp, inside, ring, p: Params, wa
     return comp, rgb, meta, scene_means
 
 
-def _window(geom_wgs84, year: int, months: list[int], p: Params, grid_cache: dict):
+def _window(geom_wgs84, year: int, months: list[int], p: Params, grid_cache: dict, want_rgb: bool = True):
     c = geom_wgs84.centroid
     tile = mgrs_tile(c.x, c.y)
     cands = scenes(tile, year, tuple(months), p.max_scene_cloud)
@@ -145,7 +176,7 @@ def _window(geom_wgs84, year: int, months: list[int], p: Params, grid_cache: dic
         grid_cache["grid"] = _grid(geom_wgs84, epsg, p)
     poly, ring_geom, bounds, shp, tr, inside, ring = grid_cache["grid"]
     # read at most 2x max_scenes of the clearest tiles, then rank by clarity over the polygon
-    comp, rgb, meta, scene_means = _composite(cands[: p.max_scenes * 2], bounds, shp, inside, ring, p, True)
+    comp, rgb, meta, scene_means = _composite(cands[: p.max_scenes * 2], bounds, shp, inside, ring, p, want_rgb)
     return tile, comp, rgb, meta, scene_means
 
 
@@ -185,7 +216,66 @@ def verify(project: dict, out_dir: Path | None = None, p: Params = Params()) -> 
     ccanopy_b = float((nb[rin] >= p.canopy_ndvi).mean()) if rin.any() else 0.0
     ccanopy_m = float((nm[rin] >= p.canopy_ndvi).mean()) if rin.any() else 0.0
     raw_canopy_gain_ha = (canopy_m - canopy_b) * area_ha
-    additional_canopy_ha = max(0.0, ((canopy_m - canopy_b) - (ccanopy_m - ccanopy_b)) * area_ha)
+
+    # --- woody canopy: trees stay green through the dry season, rain-fed grass and crops do not.
+    dry = project.get("drySeason") or {"year": m["year"], "months": m["months"]}
+    if dry["year"] == m["year"] and sorted(dry["months"]) == sorted(m["months"]):
+        nd, meta_d = nm, meta_m
+    else:
+        _, nd, _, meta_d, _ = _window(g, dry["year"], dry["months"], p, grid_cache, want_rgb=False)
+    woody_m = (nm >= p.canopy_ndvi) & (nd >= p.canopy_ndvi)  # NaN compares False: unobserved is not woody
+    canopy_now = pin & (nm >= p.canopy_ndvi)
+    dry_persistence = float(woody_m[canopy_now].mean()) if canopy_now.any() else 0.0
+    wcanopy_m = float(woody_m[pin].mean()) if pin.any() else 0.0
+    wccanopy_m = float(woody_m[rin].mean()) if rin.any() else 0.0
+    # only canopy that is both new beyond the control trend AND persists in the dry season is credited
+    additional_canopy_ha = max(0.0, min((canopy_m - canopy_b) - (ccanopy_m - ccanopy_b), (wcanopy_m - canopy_b) - (wccanopy_m - ccanopy_b)) * area_ha)
+
+    # --- boundary sensitivity: the verdict must not hinge on exactly where the line was drawn
+    j = p.boundary_jitter_m
+    variants = {
+        f"erode{int(j)}m": poly.buffer(-j),
+        f"dilate{int(j)}m": poly.buffer(j),
+        f"shiftN{int(j)}m": affinity.translate(poly, 0, j),
+        f"shiftS{int(j)}m": affinity.translate(poly, 0, -j),
+        f"shiftE{int(j)}m": affinity.translate(poly, j, 0),
+        f"shiftW{int(j)}m": affinity.translate(poly, -j, 0),
+    }
+    boundary = {}
+    for name, vp in variants.items():
+        if vp.is_empty:
+            continue
+        vi, vr = _masks(vp, shp, tr, p)
+        boundary[name] = round(_did(nb, nm, vi, vr, both)[0], 4)
+    bvals = [v for v in boundary.values() if math.isfinite(v)]
+    boundary_min = min(bvals) if bvals else float("nan")
+
+    # --- placebo test: the same polygon dropped at random elsewhere in the landscape. If random land
+    # "gains" as much as the project, the project's gain is not evidence of anything it did.
+    placebo_nets = []
+    if p.placebo_count:
+        seed = int(geometry_hash(geom)[2:18], 16)
+        rng = np.random.default_rng(seed)
+        keep_out = poly.buffer(p.control_inner_m)
+        rad, cx, cy = _radius(poly), poly.centroid.x, poly.centroid.y
+        x0, y0, x1, y1 = bounds
+        tries = 0
+        while len(placebo_nets) < p.placebo_count and tries < p.placebo_count * 20:
+            tries += 1
+            d = math.sqrt(rng.uniform((p.control_inner_m + 2 * rad) ** 2, (p.placebo_radius_m + rad) ** 2))
+            a = rng.uniform(0, 2 * math.pi)
+            cand = affinity.rotate(poly, float(rng.uniform(0, 360)), origin="centroid")
+            cand = affinity.translate(cand, d * math.cos(a), d * math.sin(a))
+            cb_ = cand.buffer(p.control_outer_m).bounds
+            if cand.intersects(keep_out) or cb_[0] < x0 or cb_[1] < y0 or cb_[2] > x1 or cb_[3] > y1:
+                continue
+            ci, cr = _masks(cand, shp, tr, p, exclude=inside)
+            net_c, cov_c = _did(nb, nm, ci, cr, both)
+            if cov_c >= p.min_coverage and math.isfinite(net_c):
+                placebo_nets.append(net_c)
+    pl = np.array(placebo_nets)
+    placebo_p = float((1 + (pl >= net_gain).sum()) / (1 + len(pl))) if len(pl) else float("nan")
+    placebo_fpr = float((pl >= p.min_net_gain).mean()) if len(pl) else float("nan")
     years = m["year"] - b["year"]
 
     if math.isfinite(p10) and math.isfinite(p50) and p50 > 0:
@@ -200,8 +290,12 @@ def verify(project: dict, out_dir: Path | None = None, p: Params = Params()) -> 
         {"id": "scenes", "label": "Independent clear scenes per window", "value": min(len(meta_b), len(meta_m)), "threshold": p.min_scenes, "pass": min(len(meta_b), len(meta_m)) >= p.min_scenes},
         {"id": "netGain", "label": "NDVI gain beyond the control area (difference-in-differences)", "value": round(net_gain, 4), "threshold": p.min_net_gain, "pass": net_gain >= p.min_net_gain},
         {"id": "robustness", "label": "Gain holds in the pessimistic 10th percentile of scene pairs", "value": round(p10, 4), "threshold": p.min_robust_gain, "pass": math.isfinite(p10) and p10 >= p.min_robust_gain},
-        {"id": "canopy", "label": "Additional canopy area (ha) beyond control trend", "value": round(additional_canopy_ha, 2), "threshold": 1.0, "pass": additional_canopy_ha >= 1.0},
+        {"id": "canopy", "label": "Additional woody canopy area (ha) beyond control trend", "value": round(additional_canopy_ha, 2), "threshold": 1.0, "pass": additional_canopy_ha >= 1.0},
+        {"id": "dryPersistence", "label": "New canopy stays green through the dry season (woody, not grass or crops)", "value": round(dry_persistence, 4), "threshold": p.min_dry_persistence, "pass": dry_persistence >= p.min_dry_persistence},
+        {"id": "boundary", "label": f"Gain holds if the boundary is shifted, shrunk or grown by {int(j)} m", "value": round(boundary_min, 4), "threshold": p.min_net_gain, "pass": math.isfinite(boundary_min) and boundary_min >= p.min_net_gain},
     ]
+    if p.placebo_count:
+        checks.append({"id": "placebo", "label": f"Gain beats random copies of the polygon in the landscape (placebo p-value, n={len(pl)})", "value": round(placebo_p, 4), "threshold": p.max_placebo_p, "pass": math.isfinite(placebo_p) and placebo_p <= p.max_placebo_p and len(pl) >= p.placebo_count // 2})
     passed = all(c["pass"] for c in checks)
     if not passed:
         credit_tonnes = 0
@@ -222,6 +316,7 @@ def verify(project: dict, out_dir: Path | None = None, p: Params = Params()) -> 
             "mgrsTile": tile,
             "baseline": {"year": b["year"], "months": b["months"], "scenes": meta_b},
             "monitoring": {"year": m["year"], "months": m["months"], "scenes": meta_m},
+            "drySeason": {"year": dry["year"], "months": dry["months"], "scenes": meta_d},
         },
         "results": {
             "coverage": round(coverage, 4),
@@ -248,6 +343,20 @@ def verify(project: dict, out_dir: Path | None = None, p: Params = Params()) -> 
             "grossTonnes": round(gross, 2),
             "uncertaintyDeduction": round(deduction, 4),
             "creditTonnes": credit_tonnes,
+        },
+        "validation": {
+            "drySeasonPersistence": round(dry_persistence, 4),
+            "woodyCanopyFracMonitoring": round(wcanopy_m, 4),
+            "controlWoodyCanopyFracMonitoring": round(wccanopy_m, 4),
+            "boundaryNetGain": boundary,
+            "boundaryNetGainMin": round(boundary_min, 4),
+            "placeboCount": int(len(pl)),
+            "placeboNetGainP50": round(float(np.percentile(pl, 50)), 4) if len(pl) else None,
+            "placeboNetGainP95": round(float(np.percentile(pl, 95)), 4) if len(pl) else None,
+            "placeboNetGainMax": round(float(pl.max()), 4) if len(pl) else None,
+            "placeboPValue": round(placebo_p, 4),
+            "placeboFalsePositiveRate": round(placebo_fpr, 4),
+            "placeboNetGains": [round(float(x), 4) for x in pl],
         },
         "checks": checks,
         "passed": passed,

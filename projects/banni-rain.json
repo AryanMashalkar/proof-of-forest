@@ -4,7 +4,60 @@
   "location": "Banni grasslands, Kutch, Gujarat, India",
   "claim": "HYPOTHETICAL greenwashing submission: claims restoration on grassland whose greening came from a swing from a drought year to a wet monsoon that greened the whole region.",
   "developer": "Hypothetical opportunist (case study)",
-  "geometry": {"type": "Polygon", "coordinates": [[[69.483, 23.683], [69.497, 23.684], [69.499, 23.692], [69.495, 23.699], [69.484, 23.698], [69.479, 23.691], [69.483, 23.683]]]},
-  "baseline": {"year": 2018, "months": [10, 11]},
-  "monitoring": {"year": 2020, "months": [10, 11]}
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [
+          69.483,
+          23.683
+        ],
+        [
+          69.497,
+          23.684
+        ],
+        [
+          69.499,
+          23.692
+        ],
+        [
+          69.495,
+          23.699
+        ],
+        [
+          69.484,
+          23.698
+        ],
+        [
+          69.479,
+          23.691
+        ],
+        [
+          69.483,
+          23.683
+        ]
+      ]
+    ]
+  },
+  "baseline": {
+    "year": 2018,
+    "months": [
+      10,
+      11
+    ]
+  },
+  "monitoring": {
+    "year": 2020,
+    "months": [
+      10,
+      11
+    ]
+  },
+  "drySeason": {
+    "year": 2021,
+    "months": [
+      3,
+      4
+    ]
+  }
 }

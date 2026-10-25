@@ -1,5 +1,5 @@
 {
-  "method": "POF-NDVI-DiD-v1",
+  "method": "POF-NDVI-DiD-v1.1",
   "params": {
     "pixel_m": 10.0,
     "max_scenes": 6,
@@ -13,7 +13,12 @@
     "min_robust_gain": 0.025,
     "removal_tco2_ha_yr": 7.0,
     "min_uncertainty_deduction": 0.1,
-    "max_uncertainty_deduction": 0.5
+    "max_uncertainty_deduction": 0.5,
+    "placebo_count": 200,
+    "placebo_radius_m": 5000.0,
+    "max_placebo_p": 0.05,
+    "boundary_jitter_m": 20.0,
+    "min_dry_persistence": 0.6
   },
   "project": {
     "id": "hasdeo-claim",
@@ -313,6 +318,51 @@
           "projectClearFraction": 0.7812
         }
       ]
+    },
+    "drySeason": {
+      "year": 2025,
+      "months": [
+        4,
+        5
+      ],
+      "scenes": [
+        {
+          "id": "S2B_44QPL_20250504_0_L2A",
+          "datetime": "2025-05-04T05:12:28.537000Z",
+          "tileCloudCover": 3.83,
+          "projectClearFraction": 1.0
+        },
+        {
+          "id": "S2C_44QPL_20250429_0_L2A",
+          "datetime": "2025-04-29T05:12:48.557000Z",
+          "tileCloudCover": 0.09,
+          "projectClearFraction": 0.9998
+        },
+        {
+          "id": "S2C_44QPL_20250419_0_L2A",
+          "datetime": "2025-04-19T05:12:47.536000Z",
+          "tileCloudCover": 0.0,
+          "projectClearFraction": 0.9993
+        },
+        {
+          "id": "S2A_44QPL_20250401_0_L2A",
+          "datetime": "2025-04-01T05:12:37.009000Z",
+          "tileCloudCover": 7.55,
+          "projectClearFraction": 0.9989
+        },
+        {
+          "id": "S2A_44QPL_20250511_0_L2A",
+          "datetime": "2025-05-11T05:12:37.907000Z",
+          "tileCloudCover": 0.78,
+          "projectClearFraction": 0.9982
+        },
+        {
+          "id": "S2C_44QPL_20250509_0_L2A",
+          "datetime": "2025-05-09T05:12:45.850000Z",
+          "tileCloudCover": 20.85,
+          "projectClearFraction": 0.998
+        }
+      ]
     }
   },
   "results": {
@@ -340,6 +390,228 @@
     "grossTonnes": 0.0,
     "uncertaintyDeduction": 0.5,
     "creditTonnes": 0
+  },
+  "validation": {
+    "drySeasonPersistence": 0.2114,
+    "woodyCanopyFracMonitoring": 0.0007,
+    "controlWoodyCanopyFracMonitoring": 0.4093,
+    "boundaryNetGain": {
+      "erode20m": -0.4909,
+      "dilate20m": -0.4734,
+      "shiftN20m": -0.4867,
+      "shiftS20m": -0.4781,
+      "shiftE20m": -0.4835,
+      "shiftW20m": -0.4832
+    },
+    "boundaryNetGainMin": -0.4909,
+    "placeboCount": 200,
+    "placeboNetGainP50": -0.0003,
+    "placeboNetGainP95": 0.0143,
+    "placeboNetGainMax": 0.0208,
+    "placeboPValue": 1.0,
+    "placeboFalsePositiveRate": 0.0,
+    "placeboNetGains": [
+      -0.0031,
+      0.0159,
+      0.0059,
+      -0.0055,
+      -0.0038,
+      -0.0043,
+      0.0053,
+      0.0068,
+      -0.0042,
+      -0.0037,
+      -0.0031,
+      0.0167,
+      -0.0182,
+      0.0143,
+      0.0126,
+      -0.0046,
+      0.0106,
+      0.0177,
+      -0.0103,
+      -0.014,
+      -0.0074,
+      -0.0271,
+      -0.0001,
+      0.0019,
+      -0.0073,
+      0.0073,
+      0.0102,
+      -0.0085,
+      0.0018,
+      0.0177,
+      -0.0034,
+      0.0119,
+      -0.0005,
+      0.0016,
+      0.0072,
+      0.0069,
+      -0.0134,
+      -0.013,
+      -0.0108,
+      -0.0077,
+      0.0033,
+      -0.0136,
+      -0.0143,
+      0.0034,
+      -0.0191,
+      -0.003,
+      -0.0011,
+      0.0084,
+      -0.0003,
+      -0.0092,
+      0.0084,
+      0.0042,
+      0.008,
+      -0.0017,
+      0.0089,
+      0.0042,
+      0.013,
+      -0.0156,
+      0.0025,
+      0.0036,
+      -0.004,
+      -0.008,
+      -0.0012,
+      -0.0051,
+      -0.0084,
+      0.002,
+      0.0021,
+      0.0071,
+      0.011,
+      -0.0191,
+      -0.002,
+      -0.0031,
+      -0.02,
+      -0.0021,
+      -0.011,
+      0.0072,
+      -0.0016,
+      -0.0188,
+      0.0076,
+      0.0016,
+      0.0037,
+      0.0026,
+      -0.0003,
+      -0.0189,
+      -0.0024,
+      -0.024,
+      0.0062,
+      -0.0054,
+      0.0186,
+      0.0103,
+      -0.0066,
+      -0.0113,
+      0.0032,
+      0.0101,
+      -0.0003,
+      -0.0074,
+      -0.0011,
+      -0.0067,
+      0.0035,
+      0.0103,
+      0.0138,
+      0.0088,
+      0.0125,
+      0.0055,
+      -0.0032,
+      0.0022,
+      0.0007,
+      -0.0099,
+      0.0041,
+      -0.0019,
+      0.0071,
+      0.0107,
+      -0.004,
+      0.0087,
+      -0.0098,
+      -0.0048,
+      -0.007,
+      0.0046,
+      -0.0178,
+      0.0057,
+      -0.0035,
+      0.0006,
+      -0.0131,
+      0.0061,
+      -0.0031,
+      -0.0055,
+      -0.0136,
+      -0.0085,
+      -0.0031,
+      -0.0082,
+      -0.0082,
+      -0.007,
+      0.0061,
+      0.0044,
+      -0.0034,
+      -0.0006,
+      -0.0025,
+      0.0053,
+      0.0003,
+      0.0014,
+      0.0206,
+      -0.0032,
+      0.0038,
+      -0.0131,
+      0.0048,
+      -0.0139,
+      0.0004,
+      -0.0147,
+      -0.0007,
+      0.0001,
+      0.0146,
+      -0.0151,
+      0.0129,
+      -0.0073,
+      0.0047,
+      -0.0178,
+      0.0023,
+      0.0016,
+      0.0012,
+      -0.0057,
+      0.0017,
+      0.0092,
+      0.0087,
+      -0.0154,
+      0.0035,
+      0.0005,
+      0.0089,
+      0.0033,
+      0.0102,
+      -0.0168,
+      -0.0152,
+      0.0021,
+      -0.0129,
+      0.0088,
+      0.0208,
+      0.0207,
+      -0.0212,
+      0.0026,
+      -0.025,
+      0.0077,
+      -0.0188,
+      -0.0011,
+      0.0051,
+      0.0041,
+      -0.0149,
+      0.0099,
+      -0.0009,
+      -0.0041,
+      0.0019,
+      -0.0046,
+      -0.0068,
+      0.0058,
+      -0.0038,
+      0.0143,
+      0.0072,
+      -0.0066,
+      0.0043,
+      -0.0128,
+      -0.0078,
+      -0.0127
+    ]
   },
   "checks": [
     {
@@ -372,9 +644,30 @@
     },
     {
       "id": "canopy",
-      "label": "Additional canopy area (ha) beyond control trend",
+      "label": "Additional woody canopy area (ha) beyond control trend",
       "value": 0.0,
       "threshold": 1.0,
+      "pass": false
+    },
+    {
+      "id": "dryPersistence",
+      "label": "New canopy stays green through the dry season (woody, not grass or crops)",
+      "value": 0.2114,
+      "threshold": 0.6,
+      "pass": false
+    },
+    {
+      "id": "boundary",
+      "label": "Gain holds if the boundary is shifted, shrunk or grown by 20 m",
+      "value": -0.4909,
+      "threshold": 0.05,
+      "pass": false
+    },
+    {
+      "id": "placebo",
+      "label": "Gain beats random copies of the polygon in the landscape (placebo p-value, n=200)",
+      "value": 1.0,
+      "threshold": 0.05,
       "pass": false
     }
   ],
@@ -382,53 +675,57 @@
   "evidence": {
     "zoom_baseline_rgb.png": {
       "file": "zoom_baseline_rgb.png",
-      "sha256": "52e1b145c0201128d0402ff53ae11b83a1f065ad57a529c7bb8f1e600a677b92"
+      "sha256": "3025a77734ab5df65abd6120f56269bcb4154b391bde2e2957dbd533657c5878"
     },
     "zoom_monitoring_rgb.png": {
       "file": "zoom_monitoring_rgb.png",
-      "sha256": "4cc5dd58aa988f5533d1cc8fea260e5b94289c6fe44c5f124849135e481d90b9"
+      "sha256": "81297034bb03d70abf1e0a2ffc9236f2abc98db4d3e0664ce8d8aeaaadabfe06"
     },
     "zoom_baseline_ndvi.png": {
       "file": "zoom_baseline_ndvi.png",
-      "sha256": "07636747390600cd35c0dfee8c9b4a04f45d278d5f520cfb7afd1cbe65d6edcb"
+      "sha256": "3382ee2e0daec76f87b495bf208925cbd4bb1a7230ab9745ec1be19db4616082"
     },
     "zoom_monitoring_ndvi.png": {
       "file": "zoom_monitoring_ndvi.png",
-      "sha256": "5a80fb5c5ccd62bc81d9d9222a369497843f42f03ecafde6d76bb86af5902e14"
+      "sha256": "a194051931888fda2a100a111a65759b6d8ffce02e656f637ccdd1251d849f1e"
     },
     "zoom_ndvi_change.png": {
       "file": "zoom_ndvi_change.png",
-      "sha256": "bde803c0733a6897505a9d7e91c8342338a98ae18c5171a394166fc7ae86a36d"
+      "sha256": "d6b7aee962603c880e2c3b0afc6a4765f046920b512b38d5b45407279eae605d"
     },
     "baseline_rgb.png": {
       "file": "baseline_rgb.png",
-      "sha256": "efb1c1565293c7dc74950fabc20a96d7bb9f4f3975f0ceed0c1eb819df0e0ed5"
+      "sha256": "320ecc790f2dd58aa7d916dfb9d526268c25d667ce3c049f03ba1e6737d0bffc"
     },
     "monitoring_rgb.png": {
       "file": "monitoring_rgb.png",
-      "sha256": "8e744589f43ee173a2704555a2611502e934d26132bf77ea202b2ddfc002f4ef"
+      "sha256": "a243b535ffe99e7713dff1602fb63c99c63caf0cc7c35517a33257cf3ce4e800"
     },
     "baseline_ndvi.png": {
       "file": "baseline_ndvi.png",
-      "sha256": "038f3b45b6564cfec72aa7443c0987326e79fa6736d439389868746beb670a1d"
+      "sha256": "1f8f607fbd181908e42a44c48b6781708d86c6c237ba87cf65ba7fe2a8df4670"
     },
     "monitoring_ndvi.png": {
       "file": "monitoring_ndvi.png",
-      "sha256": "5213a0dc14371a1aa94855277d01271aec9a0f0284b50cc0e891369aec993aa4"
+      "sha256": "eedad770163d6a045c9d788acd154c8a528f7074ae17f8a2e6d990fcd8fee497"
     },
     "ndvi_change.png": {
       "file": "ndvi_change.png",
-      "sha256": "3bc4e2ce0d5ff57d354a80577fcd7df10e51e840052c350b221abd09b8023135"
+      "sha256": "a3ebf0b799d747b83ec3bc9ac8e53eeb2149d2b5f367d88188207d267306fdac"
     },
     "ndvi_histogram.png": {
       "file": "ndvi_histogram.png",
       "sha256": "a13ef4ccd1b158e2fd8649b60089f38723326522703cbfc77734fef2940e48df"
+    },
+    "placebo_test.png": {
+      "file": "placebo_test.png",
+      "sha256": "b4e96e87674b908a4923b05d91be500ab62422fc07ea61bf0752f4bd4bfc09d7"
     }
   },
-  "reportHash": "0x6f84262b2c8f31394252bb58f2cbcf1170155701daeb5ac57cbcee0aaa6e8f96",
+  "reportHash": "0x6fd2aba74249f57d6ef1d899643d59ac75a5c10eacab87a9879032f94d82f2df",
   "attestation": {
     "geometryHash": "0x33788dd6ae32c226999196a3742916a284a1cd5470f2388b57f913040c390b04",
-    "reportHash": "0x6f84262b2c8f31394252bb58f2cbcf1170155701daeb5ac57cbcee0aaa6e8f96",
+    "reportHash": "0x6fd2aba74249f57d6ef1d899643d59ac75a5c10eacab87a9879032f94d82f2df",
     "baselineYear": 2019,
     "monitoringYear": 2025,
     "ndviBaseline": 5579,

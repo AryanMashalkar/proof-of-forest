@@ -11,9 +11,20 @@ export type Report = {
     mgrsTile: string;
     baseline: { year: number; months: number[]; scenes: { id: string; datetime: string; projectClearFraction: number }[] };
     monitoring: { year: number; months: number[]; scenes: { id: string; datetime: string; projectClearFraction: number }[] };
+    drySeason?: { year: number; months: number[]; scenes: { id: string; datetime: string; projectClearFraction: number }[] };
   };
   results: Record<string, number | boolean>;
   checks: { id: string; label: string; value: number; threshold: number; pass: boolean }[];
+  validation?: {
+    drySeasonPersistence: number;
+    boundaryNetGain: Record<string, number>;
+    boundaryNetGainMin: number;
+    placeboCount: number;
+    placeboNetGainP95: number;
+    placeboNetGainMax: number;
+    placeboPValue: number;
+    placeboFalsePositiveRate: number;
+  };
   passed: boolean;
   evidence: Record<string, { file: string; sha256: string }>;
   reportHash: string;

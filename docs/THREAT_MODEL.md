@@ -36,7 +36,8 @@ ProofOfForest has three trust boundaries: the **measurement** (satellite data an
 | A8 | Register the same land twice under two projects | `projectByGeometry` makes polygon hashes unique *(test)*. Overlapping but non-identical polygons are a known gap: the production oracle should reject polygons that intersect any registered polygon |
 | A9 | Credit the same growth twice by re-running the same years | Baseline year is locked at registration; each crediting period must start where the last ended, and periods never overlap *(test)* |
 | A10 | Tamper with the published report after it was signed | `reportHash` is keccak256 of the canonical report (including SHA-256 of every evidence image). Oracles recompute it and refuse mismatches *(test)*; anyone can run `python -m pof_engine check-hash` |
-| A11 | NDVI saturates or confuses crops with trees | Dry-season windows (when crops are bare in the case studies), a canopy threshold and a conservative removal factor. Limitation: NDVI is a proxy for canopy, not biomass; see "Known limitations" |
+| A11 | Pass off seasonal grass or crops as forest | Woody-canopy rule: a pixel only counts as canopy if it stays above NDVI 0.40 in the following dry season, and ≥ 60% of new canopy must persist *(test: seasonal grass rejected; real case Banni: only 34% persists)*. Limitation: NDVI locates canopy but does not weigh biomass; see "Known limitations" |
+| A12 | Draw the boundary around whichever pixels happened to green (selection bias) | **Placebo test**: 200 random rotated copies of the same polygon within 5 km, analysed identically; the project must beat 95% of them *(test; Smritivan p = 0.005, Banni p = 0.57)*. **Boundary sensitivity**: gain must hold with the polygon shrunk, grown or shifted by 20 m *(test)*. The polygon hash and baseline year are fixed on-chain at registration, before monitoring. A tighter boundary also *reduces* credited area, because credits scale with canopy hectares, not with the NDVI gain |
 
 ### B. Attestation (oracles)
 
@@ -49,7 +50,8 @@ ProofOfForest has three trust boundaries: the **measurement** (satellite data an
 | B5 | Replay the same report | `reportUsed[reportHash]` is set on first use, including for rejections *(test)* |
 | B6 | Sit on an old attestation and submit it much later | Every attestation carries an `expiry` *(test)* |
 | B7 | Colluding or buggy oracles sign weak numbers as "passed" | Defence in depth: the contract re-checks net gain, coverage and credits against its own on-chain policy and records a policy rejection *(test)* |
-| B8 | Oracle signs without running the engine | Oracle code re-derives every signed field from the report body and checks verdict consistency; the report is reproducible by anyone from public data |
+| B8 | Oracle signs without checking ("rubber-stamping") | The oracle node (`oracle/node.ts`) will not sign until `pof_engine reproduce` has re-run the full analysis from the raw ESA archive and every result, check and verdict matches; it also refuses non-standard method parameters and a polygon that differs from the on-chain registration *(tests)*. All three real reports were reproduced bit-for-bit from an empty cache |
+| B9 | Oracle keys all controlled by one party | One key per operator, one signature file per node; anyone combines and relays, and the combiner rejects files that sign different attestations or forged signer names *(tests)*. Committee membership is `ORACLE_ROLE`, changeable only by the admin (production: multisig + timelock) |
 
 ### C. Settlement (contract)
 
@@ -66,8 +68,8 @@ ProofOfForest has three trust boundaries: the **measurement** (satellite data an
 
 ## Known limitations (stated honestly)
 
-1. **NDVI is a proxy.** It measures green canopy, not tonnes of carbon. The removal factor (7 tCO2e/ha/yr, configurable) is a conservative Tier-1 style default, not project-specific allometry. Production use would combine NDVI with field plots, canopy height (GEDI / LiDAR) or biomass products.
+1. **NDVI locates canopy; it does not weigh it.** The method uses NDVI only to decide *where* new, persistent woody canopy exists beyond the landscape trend. Tonnes come from a conservative removal factor (7 tCO2e/ha/yr, configurable per ecozone and recorded in the signed report), then a 10–50% uncertainty deduction and a 20% buffer. Production use would calibrate that factor with field plots and canopy height (GEDI / LiDAR).
 2. **10 m resolution** cannot see individual saplings; very young plantations may only become creditable after canopy closes. This errs on the side of under-crediting.
-3. **The oracle committee in the demo is run by one operator** with three keys. Real deployments need independent operators (registries, auditors, NGOs) each running the engine.
+3. **In the demo, all three oracle nodes run on one laptop.** The node software is built for independent operators (each re-runs the analysis, signs with its own key and publishes a signature file), but independence is ultimately a governance property: production needs a registry, an auditor and a research lab each running a node.
 4. **Additionality beyond vegetation trends** (would the project have happened anyway financially?) is out of scope for remote sensing and remains a registry question.
-5. **The case-study polygons are digitised from imagery** for demonstration: Smritivan's around the visible planted blocks, Hasdeo and Banni as hypothetical fraudulent claims. They are not registered carbon projects, and the credit figures are not certified offsets.
+5. **The case-study polygons are digitised from imagery** for demonstration (the placebo and boundary tests bound how much a hand-drawn line can matter): Smritivan's around the visible planted blocks, Hasdeo and Banni as hypothetical fraudulent claims. They are not registered carbon projects, and the credit figures are not certified offsets.
