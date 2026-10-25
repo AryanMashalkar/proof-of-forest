@@ -7,217 +7,253 @@ This is Proof Of Forest.
 Carbon credits that exist only if the forest does.
 
 3
-00:00:05,898 --> 00:00:08,193
+00:00:05,895 --> 00:00:08,190
 Voluntary carbon markets run on trust.
 
 4
-00:00:08,193 --> 00:00:15,441
+00:00:08,190 --> 00:00:15,438
 Investigations have found forest credits sold for growth that never happened, and the same tonne counted more than once.
 
 5
-00:00:15,441 --> 00:00:22,810
+00:00:15,438 --> 00:00:22,807
 Verification means expensive site audits that small projects can't afford, and buyers can't check the evidence themselves.
 
 6
-00:00:22,810 --> 00:00:29,514
+00:00:22,807 --> 00:00:29,511
 So we built a system where the evidence is public, the check is automatic, and every tonne has a serial number.
 
 7
-00:00:30,221 --> 00:00:32,027
+00:00:30,228 --> 00:00:31,997
 It works in three layers.
 
 8
-00:00:32,027 --> 00:00:33,111
+00:00:31,997 --> 00:00:33,058
 First, measure.
 
 9
-00:00:33,111 --> 00:00:44,380
+00:00:33,058 --> 00:00:44,096
 Our engine pulls free Copernicus Sentinel-2 satellite imagery, masks out clouds, and compares the vegetation inside a project with a control ring around it.
 
 10
-00:00:44,380 --> 00:00:45,464
+00:00:44,096 --> 00:00:45,157
 Second, attest.
 
 11
-00:00:45,464 --> 00:00:49,654
-Three independent oracles re-check the report and sign it.
+00:00:45,157 --> 00:00:53,930
+Three independent oracles each re-run the whole analysis from the raw satellite data, and sign only if every number matches.
 
 12
-00:00:49,654 --> 00:00:50,665
+00:00:53,930 --> 00:00:54,921
 Third, settle.
 
 13
-00:00:50,665 --> 00:01:01,212
+00:00:54,921 --> 00:01:05,251
 An E-R-C 1155 smart contract mints credits only when two of the three oracles agree, and the numbers also pass the contract's own on-chain policy.
 
 14
-00:01:01,912 --> 00:01:04,763
+00:01:05,953 --> 00:01:08,804
 Here is the registry, with three case studies.
 
 15
-00:01:04,763 --> 00:01:07,181
+00:01:08,804 --> 00:01:11,222
 All of them run on real satellite data.
 
 16
-00:01:07,881 --> 00:01:10,807
+00:01:11,924 --> 00:01:14,850
 First, Smritivan in Bhuj, Gujarat.
 
 17
-00:01:10,807 --> 00:01:14,851
+00:01:14,850 --> 00:01:18,894
 A Miyawaki forest planted on a barren hillside.
 
 18
-00:01:14,851 --> 00:01:16,228
+00:01:18,894 --> 00:01:20,271
 Drag the slider.
 
 19
-00:01:16,228 --> 00:01:18,465
+00:01:20,271 --> 00:01:22,508
 In 2019 the slope is bare.
 
 20
-00:01:18,465 --> 00:01:20,702
+00:01:22,508 --> 00:01:24,745
 By 2025, it's dense green.
 
 21
-00:01:21,404 --> 00:01:26,331
+00:01:25,446 --> 00:01:30,373
 In the N-D-V-I greenness index, the project went from 0.14 to 0.43.
 
 22
-00:01:26,331 --> 00:01:33,760
+00:01:30,373 --> 00:01:37,802
 But the surrounding city also greened a little, so we only credit the difference: a net gain of 0.22.
 
 23
-00:01:33,760 --> 00:01:40,305
+00:01:37,802 --> 00:01:44,347
 It holds across all thirty-six scene pairs, with one hundred percent cloud-free coverage.
 
 24
-00:01:41,006 --> 00:01:43,839
+00:01:45,049 --> 00:01:47,882
 That's almost fifteen hectares of new canopy.
 
 25
-00:01:43,839 --> 00:01:48,686
+00:01:47,882 --> 00:01:52,729
 After an uncertainty deduction, five hundred and forty one tonnes of C O two.
 
 26
-00:01:49,389 --> 00:01:51,843
-Anyone can relay the signed attestation.
+00:01:53,432 --> 00:01:59,123
+But could a developer just draw the boundary around whatever happened to turn green?
 
 27
-00:01:51,843 --> 00:01:54,971
-I'll submit it, and the contract mints the credits.
+00:01:59,123 --> 00:02:01,969
+So the engine tries to prove itself wrong.
 
 28
-00:01:54,971 --> 00:02:02,210
-One batch, with unique serial numbers, and twenty percent held back in a buffer pool, in case the forest is ever lost.
+00:02:01,969 --> 00:02:08,541
+It drops the same polygon at two hundred random spots nearby, and analyses each one the same way.
 
 29
-00:02:02,914 --> 00:02:03,752
-Now, a fake.
+00:02:08,541 --> 00:02:10,845
+The best random patch gained 0.10.
 
 30
-00:02:03,752 --> 00:02:12,137
-This hypothetical developer claims three hundred and sixty five hectares of reforestation in Hasdeo Arand, Chhattisgarh.
+00:02:10,845 --> 00:02:14,165
+Smritivan gained 0.22, more than all two hundred.
 
 31
-00:02:12,137 --> 00:02:14,443
-The satellite shows the opposite.
+00:02:14,165 --> 00:02:22,499
+The result also holds if the boundary moves by twenty metres, and all of the new canopy stays green through the dry season.
 
 32
-00:02:14,443 --> 00:02:18,146
-Dense forest in 2019, an open-cast coal mine by 2025.
+00:02:22,499 --> 00:02:24,125
+That's trees, not grass.
 
 33
-00:02:18,146 --> 00:02:21,151
-The greenness index fell from 0.56 to 0.09.
+00:02:24,828 --> 00:02:27,282
+Anyone can relay the signed attestation.
 
 34
-00:02:21,151 --> 00:02:26,880
-When the signed verdict is submitted, the contract records the rejection on-chain.
+00:02:27,282 --> 00:02:30,410
+I'll submit it, and the contract mints the credits.
 
 35
-00:02:26,880 --> 00:02:29,815
-No credits, and a permanent public record.
+00:02:30,410 --> 00:02:37,649
+One batch, with unique serial numbers, and twenty percent held back in a buffer pool, in case the forest is ever lost.
 
 36
-00:02:30,514 --> 00:02:32,658
-The third case is the subtle one.
+00:02:38,349 --> 00:02:39,187
+Now, a fake.
 
 37
-00:02:32,658 --> 00:02:35,322
-A claim on the Banni grasslands in Kutch.
+00:02:39,187 --> 00:02:47,572
+This hypothetical developer claims three hundred and sixty five hectares of reforestation in Hasdeo Arand, Chhattisgarh.
 
 38
-00:02:35,322 --> 00:02:39,351
-Inside the polygon, the greenness index jumped by almost half.
+00:02:47,572 --> 00:02:49,878
+The satellite shows the opposite.
 
 39
-00:02:39,351 --> 00:02:43,250
-A simple before and after check would happily issue credits.
+00:02:49,878 --> 00:02:53,581
+Dense forest in 2019, an open-cast coal mine by 2025.
 
 40
-00:02:43,955 --> 00:02:48,228
-But zoom out to the landscape, and everything turned green.
+00:02:53,581 --> 00:02:56,586
+The greenness index fell from 0.56 to 0.09.
 
 41
-00:02:48,228 --> 00:02:52,211
-2018 was a drought year, and 2020 had a strong monsoon.
+00:02:56,586 --> 00:03:02,315
+When the signed verdict is submitted, the contract records the rejection on-chain.
 
 42
-00:02:52,211 --> 00:02:56,990
-The control ring rose by the same amount, so the net gain is zero.
+00:03:02,315 --> 00:03:05,250
+No credits, and a permanent public record.
 
 43
-00:02:56,990 --> 00:03:00,104
-Greenwashing caught, and rejected on-chain.
+00:03:05,952 --> 00:03:08,096
+The third case is the subtle one.
 
 44
-00:03:00,805 --> 00:03:02,328
-Back to the real credits.
+00:03:08,096 --> 00:03:10,760
+A claim on the Banni grasslands in Kutch.
 
 45
-00:03:02,328 --> 00:03:06,714
-The developer sells two hundred and fifty tonnes to a buyer, Acme Steel.
+00:03:10,760 --> 00:03:14,789
+Inside the polygon, the greenness index jumped by almost half.
 
 46
-00:03:07,416 --> 00:03:14,296
-Now acting as the buyer, they retire one hundred and twenty tonnes against their 2026 Scope 1 emissions.
+00:03:14,789 --> 00:03:18,688
+A simple before and after check would happily issue credits.
 
 47
-00:03:14,296 --> 00:03:21,177
-Retiring burns the tokens and assigns serial numbers one to one hundred and twenty to Acme, permanently.
+00:03:19,392 --> 00:03:23,262
+But zoom out to the landscape, and everything turned green.
 
 48
-00:03:21,177 --> 00:03:25,080
-Here is the certificate, tied to the satellite report hash.
+00:03:23,262 --> 00:03:26,869
+2018 was a drought year, and 2020 had a strong monsoon.
 
 49
-00:03:25,783 --> 00:03:27,611
-Anyone can verify a serial.
+00:03:26,869 --> 00:03:31,198
+The control ring rose by the same amount, so the net gain is zero.
 
 50
-00:03:27,611 --> 00:03:31,200
-Serial forty two: retired, in certificate number one.
+00:03:31,198 --> 00:03:37,823
+It's also no better than random land nearby, and most of the new green fades again in the dry season.
 
 51
-00:03:31,200 --> 00:03:33,773
-It can never be sold or claimed again.
+00:03:37,823 --> 00:03:39,463
+That's grass, not forest.
 
 52
-00:03:33,773 --> 00:03:38,242
-And the ledger shows every verification, including the rejections.
+00:03:39,463 --> 00:03:42,283
+Greenwashing caught, and rejected on-chain.
 
 53
-00:03:38,942 --> 00:03:50,644
-Proof Of Forest uses only free, public data, verifies a project in about ninety seconds, and is backed by forty five automated tests, including the real satellite reports, end to end.
+00:03:42,984 --> 00:03:44,507
+Back to the real credits.
 
 54
-00:03:50,644 --> 00:03:58,765
-Sentinel-2 revisits every forest on Earth every five days, so projects can be monitored continuously, not once every few years.
+00:03:44,507 --> 00:03:48,893
+The developer sells two hundred and fifty tonnes to a buyer, Acme Steel.
 
 55
-00:03:58,765 --> 00:04:03,114
-Every number in this demo is reproducible from the open source repo.
+00:03:49,594 --> 00:03:56,474
+Now acting as the buyer, they retire one hundred and twenty tonnes against their 2026 Scope 1 emissions.
 
 56
-00:04:03,114 --> 00:04:03,753
+00:03:56,474 --> 00:04:03,355
+Retiring burns the tokens and assigns serial numbers one to one hundred and twenty to Acme, permanently.
+
+57
+00:04:03,355 --> 00:04:07,258
+Here is the certificate, tied to the satellite report hash.
+
+58
+00:04:07,960 --> 00:04:09,788
+Anyone can verify a serial.
+
+59
+00:04:09,788 --> 00:04:13,377
+Serial forty two: retired, in certificate number one.
+
+60
+00:04:13,377 --> 00:04:15,950
+It can never be sold or claimed again.
+
+61
+00:04:15,950 --> 00:04:20,419
+And the ledger shows every verification, including the rejections.
+
+62
+00:04:21,120 --> 00:04:32,748
+Proof Of Forest uses only free, public data, verifies a project in about ninety seconds, and is backed by fifty two automated tests, including the real satellite reports, end to end.
+
+63
+00:04:32,748 --> 00:04:40,862
+Sentinel-2 revisits every forest on Earth every five days, so projects can be monitored continuously, not once every few years.
+
+64
+00:04:40,862 --> 00:04:45,206
+Every number in this demo is reproducible from the open source repo.
+
+65
+00:04:45,206 --> 00:04:45,845
 Thank you.

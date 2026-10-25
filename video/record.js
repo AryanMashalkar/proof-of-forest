@@ -154,6 +154,16 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
     await scrollToSel(".kv", 330);
     await to("tr.total", 30);
   });
+  await scene("smritivan5", async () => {
+    await scrollToSel(".validation", 200);
+    await to(".validation img.placebo", 30, 0.45, 0.5);
+    await sleep(dur.smritivan5 * 300);
+    await to(".validation img.placebo", 30, 0.9, 0.5);
+    await sleep(dur.smritivan5 * 200);
+    await to(".validation .kv tr >> nth=4", 30);
+    await sleep(dur.smritivan5 * 150);
+    await to(".validation .kv tr >> nth=8", 30);
+  });
   await scene("smritivan4", async () => {
     await scrollToSel("[data-testid=submit-attestation]", 420);
     await click("[data-testid=submit-attestation]");
@@ -185,6 +195,11 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
     await to(".did-row >> nth=1", 30);
     await sleep(1200);
     await to("[data-testid=naive-callout]", 30);
+    await sleep(1500);
+    await scrollToSel(".validation", 200);
+    await to(".validation img.placebo", 30, 0.5, 0.5);
+    await sleep(2500);
+    await to(".validation .kv tr >> nth=8", 30);
     await sleep(1500);
     await scrollToSel("[data-testid=submit-attestation]", 420);
     await click("[data-testid=submit-attestation]");
