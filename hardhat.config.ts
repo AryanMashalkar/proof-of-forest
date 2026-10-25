@@ -33,6 +33,9 @@ const config: HardhatUserConfig = {
     baseSepolia: { url: process.env.BASE_SEPOLIA_RPC_URL || "https://sepolia.base.org", chainId: 84532, accounts },
   },
   gasReporter: { enabled: process.env.REPORT_GAS === "1", currency: "USD" },
+  // free key from etherscan.io/myapikey (one key works for every Etherscan-supported chain)
+  etherscan: { apiKey: process.env.ETHERSCAN_API_KEY || "" },
+  sourcify: { enabled: false },
 };
 
 export default config;
