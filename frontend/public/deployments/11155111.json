@@ -1,0 +1,109 @@
+{
+  "network": "sepolia",
+  "chainId": "11155111",
+  "address": "0x0981c8D03882e5B3D76Ed65adD15D2eb818B8aCa",
+  "deployTx": "0xe61de96d8cf80961b7624ec732b71c3a5ac7af2db6eb9ac99979c9339dbdf500",
+  "deployer": "0xf5f6F6416BeDcb3f01F4270aa8657bC4eD7ba91d",
+  "oracles": [
+    "0xCFb498a7353C8Cec4C55886570a955f2b67c91Bc",
+    "0x12BE0c0EfB73498679C24a88F1e9Bf7bFa8aEA4D",
+    "0xF1469F1D94753ba1a6698804815Aa05e7Ae4cd6F"
+  ],
+  "threshold": 2,
+  "deployedAt": "2026-10-25T10:41:19.623Z",
+  "cases": [
+    {
+      "id": "smritivan-bhuj",
+      "projectId": "1",
+      "registerTx": "0xd65e5bb3a94155fa18d7b3f6d5cd686cf96aad73807151e9ff89ad343eb93e8d",
+      "attestation": {
+        "projectId": "1",
+        "geometryHash": "0x8879f2f3d4b8d1d05c2946b15d330a7ade52b185d1a2aed516909e2bdc84acb1",
+        "reportHash": "0xbff421de88d89f800e116d30c1f847e348a2f6c3b7e6c38491f4e5ebf98add38",
+        "baselineYear": 2019,
+        "monitoringYear": 2025,
+        "ndviBaseline": 1363,
+        "ndviMonitoring": 4298,
+        "controlDelta": 693,
+        "netGain": 2242,
+        "validCoverageBps": 10000,
+        "canopyGainHa100": 1483,
+        "creditTonnes": "541",
+        "passed": true,
+        "expiry": "1798108843"
+      },
+      "signatures": [
+        "0x4c43b587b46e500e8e0d29128fd6b9250d10b1086df0b3091f05a98da56d58ec7bd5c96b7744c54956b0be07c7ab1ae7ad0038724e9766cdd14afb822ad6981c1b",
+        "0xa40ee3310798dc552745b7e394efeb215bf9c82d7fd86714902996c9e12b696c7239e9a0353d79fedc25aced87d0818e98419f1b88aa5bcf0193f46c7d81b7861c",
+        "0xca4fc8d745aa344b86cf0dab7bf2c753745e3bc68a1fcefbf108da2eb400de4a41218df0de20de0c19054e7590d34ae94535f16dbb9aad95637cab8445a544ee1c"
+      ],
+      "signers": [
+        "0x12BE0c0EfB73498679C24a88F1e9Bf7bFa8aEA4D",
+        "0xCFb498a7353C8Cec4C55886570a955f2b67c91Bc",
+        "0xF1469F1D94753ba1a6698804815Aa05e7Ae4cd6F"
+      ]
+    },
+    {
+      "id": "hasdeo-claim",
+      "projectId": "2",
+      "registerTx": "0xd2f3d41f07345d2f10c3df912db4f86389e0b5453b2da34ec329fb8ff9db8c2c",
+      "attestation": {
+        "projectId": "2",
+        "geometryHash": "0x33788dd6ae32c226999196a3742916a284a1cd5470f2388b57f913040c390b04",
+        "reportHash": "0x0ef26b0722a9880598c3e146d911c253231be937eb328c8d9813f0f366342902",
+        "baselineYear": 2019,
+        "monitoringYear": 2025,
+        "ndviBaseline": 5579,
+        "ndviMonitoring": 922,
+        "controlDelta": 183,
+        "netGain": -4840,
+        "validCoverageBps": 9988,
+        "canopyGainHa100": 0,
+        "creditTonnes": "0",
+        "passed": false,
+        "expiry": "1798108843"
+      },
+      "signatures": [
+        "0xd7abcae29b35f82f1a774245f9e8d3c91971a0c4643a5750cff13a652a0747c35e6cf29e6fc981a9ad5c599784be727d68a4d93e2ed50848e99d30ae310830d81b",
+        "0xd79d2403531120ddf29171aa22a30fc75827e0b1b0a07df23ff1deb6c32f57ad746b0bbb50316603efc0c08466ca2e564c47a7d82c71ad7ad2d67fe63f1ca05c1b",
+        "0xf1d97db5ff0c406c73d9b794c21c40a3634010fe38bf7a598da018acd1a54a036d690120653db4b30680d670b1c3456a7d57905f1ec922aea5cc83c0b276fa581b"
+      ],
+      "signers": [
+        "0x12BE0c0EfB73498679C24a88F1e9Bf7bFa8aEA4D",
+        "0xCFb498a7353C8Cec4C55886570a955f2b67c91Bc",
+        "0xF1469F1D94753ba1a6698804815Aa05e7Ae4cd6F"
+      ]
+    },
+    {
+      "id": "banni-rain",
+      "projectId": "3",
+      "registerTx": "0x34ea005701f5e52b04c1266e94ef3c63caaaec34aadb3b872fc0822e8dea2d73",
+      "attestation": {
+        "projectId": "3",
+        "geometryHash": "0x5f2bd0c94f44da77b7f21a095792fed48b8e89f7ff786ff1e79ffa448c9d4438",
+        "reportHash": "0x924962e9144a669eb2fafef44bcea93a95c83e37a9717311311261a03463e562",
+        "baselineYear": 2018,
+        "monitoringYear": 2020,
+        "ndviBaseline": 1530,
+        "ndviMonitoring": 6361,
+        "controlDelta": 4771,
+        "netGain": 60,
+        "validCoverageBps": 9996,
+        "canopyGainHa100": 0,
+        "creditTonnes": "0",
+        "passed": false,
+        "expiry": "1798108843"
+      },
+      "signatures": [
+        "0x25447b5d9b8e22b07f50837f46da4924c08e29f54052b84b0b80aadb68918ded12b9cb863f6adf072bbc487e2b4b2760e729517e9f8ecb49be7f01ec6060e7931c",
+        "0xa3f9b05e3f517422391511b3be9f49936c2347f50920c0c0ddbe011f3d38df935445345050496c806def80a01600175bdf6b496231afbc6975c1c9e3f0a1f5421c",
+        "0x3a6a59a9c8b3e6f0f3de761328980644b05ea86d47b3ae940715dbce4796427c5180b56c132bb75d3fe6c74cd19e0e83ae614cc157149f36edcd77d4ff70968e1c"
+      ],
+      "signers": [
+        "0x12BE0c0EfB73498679C24a88F1e9Bf7bFa8aEA4D",
+        "0xCFb498a7353C8Cec4C55886570a955f2b67c91Bc",
+        "0xF1469F1D94753ba1a6698804815Aa05e7Ae4cd6F"
+      ]
+    }
+  ]
+}
