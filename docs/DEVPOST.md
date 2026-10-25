@@ -1,6 +1,6 @@
 # Devpost submission draft: ProofOfForest
 
-> Copy each section into the matching Devpost field. Replace the repo URL placeholder after you push.
+> Copy each section into the matching Devpost field.
 
 **Project name:** ProofOfForest
 
@@ -8,7 +8,7 @@
 
 **Track:** Carbon Markets & Emissions Transparency
 
-**Links:** GitHub `<https://github.com/<you>/proof-of-forest>` · Demo video (4:48) · Testnet contract [0x0981c8D03882e5B3D76Ed65adD15D2eb818B8aCa on Ethereum Sepolia](https://sepolia.etherscan.io/address/0x0981c8D03882e5B3D76Ed65adD15D2eb818B8aCa)
+**Links:** GitHub [github.com/AryanMashalkar/proof-of-forest](https://github.com/AryanMashalkar/proof-of-forest) · Demo video (4:48) · Testnet contract [0x0981c8D03882e5B3D76Ed65adD15D2eb818B8aCa on Ethereum Sepolia](https://sepolia.etherscan.io/address/0x0981c8D03882e5B3D76Ed65adD15D2eb818B8aCa)
 
 ---
 
