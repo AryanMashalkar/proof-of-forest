@@ -675,43 +675,43 @@
   "evidence": {
     "zoom_baseline_rgb.png": {
       "file": "zoom_baseline_rgb.png",
-      "sha256": "3025a77734ab5df65abd6120f56269bcb4154b391bde2e2957dbd533657c5878"
+      "sha256": "309c1c2c20ed550013d995c264b79b91eb7a3269d9b3345645958d470efcae16"
     },
     "zoom_monitoring_rgb.png": {
       "file": "zoom_monitoring_rgb.png",
-      "sha256": "81297034bb03d70abf1e0a2ffc9236f2abc98db4d3e0664ce8d8aeaaadabfe06"
+      "sha256": "3683a071585ec7424bfb464e49e6162d17a7c0175b1b509ad50147e15b269e9c"
     },
     "zoom_baseline_ndvi.png": {
       "file": "zoom_baseline_ndvi.png",
-      "sha256": "3382ee2e0daec76f87b495bf208925cbd4bb1a7230ab9745ec1be19db4616082"
+      "sha256": "c461d74dfdb1f074aab73a9abd8bea4bcd5460b811a09ad6e7fc14e461d63852"
     },
     "zoom_monitoring_ndvi.png": {
       "file": "zoom_monitoring_ndvi.png",
-      "sha256": "a194051931888fda2a100a111a65759b6d8ffce02e656f637ccdd1251d849f1e"
+      "sha256": "228aca42c92ca041cdf8480aa193ad6e9c0cd2963168e9e295d2a916ca21cd73"
     },
     "zoom_ndvi_change.png": {
       "file": "zoom_ndvi_change.png",
-      "sha256": "d6b7aee962603c880e2c3b0afc6a4765f046920b512b38d5b45407279eae605d"
+      "sha256": "f9d5d6e4ff923bc3036bbeab09cf9d946bb95fcf9b11bbd80a6be6afe9e98965"
     },
     "baseline_rgb.png": {
       "file": "baseline_rgb.png",
-      "sha256": "320ecc790f2dd58aa7d916dfb9d526268c25d667ce3c049f03ba1e6737d0bffc"
+      "sha256": "3a83d3d1275c78254785186c47346aa98f8a58bb2c987a8677c9e67da0e9f19f"
     },
     "monitoring_rgb.png": {
       "file": "monitoring_rgb.png",
-      "sha256": "a243b535ffe99e7713dff1602fb63c99c63caf0cc7c35517a33257cf3ce4e800"
+      "sha256": "ab9dd398c9fae08edf4d2f68aea13e0d1b37012fea341905dba31e302da992db"
     },
     "baseline_ndvi.png": {
       "file": "baseline_ndvi.png",
-      "sha256": "1f8f607fbd181908e42a44c48b6781708d86c6c237ba87cf65ba7fe2a8df4670"
+      "sha256": "3cd027ada67ad7b3bc9790f4dcb525ba11cca144852b1bba269ccae41dd38698"
     },
     "monitoring_ndvi.png": {
       "file": "monitoring_ndvi.png",
-      "sha256": "eedad770163d6a045c9d788acd154c8a528f7074ae17f8a2e6d990fcd8fee497"
+      "sha256": "ab70c104d94998c4bd08b9d5e438b98845ea77dd98782d8be67911973f3cda10"
     },
     "ndvi_change.png": {
       "file": "ndvi_change.png",
-      "sha256": "a3ebf0b799d747b83ec3bc9ac8e53eeb2149d2b5f367d88188207d267306fdac"
+      "sha256": "e56449c077cda45b3c9aaea27d1ebfec7f1bcf106507e99aefd239d4ef277145"
     },
     "ndvi_histogram.png": {
       "file": "ndvi_histogram.png",
@@ -722,10 +722,10 @@
       "sha256": "b4e96e87674b908a4923b05d91be500ab62422fc07ea61bf0752f4bd4bfc09d7"
     }
   },
-  "reportHash": "0x6fd2aba74249f57d6ef1d899643d59ac75a5c10eacab87a9879032f94d82f2df",
+  "reportHash": "0x0ef26b0722a9880598c3e146d911c253231be937eb328c8d9813f0f366342902",
   "attestation": {
     "geometryHash": "0x33788dd6ae32c226999196a3742916a284a1cd5470f2388b57f913040c390b04",
-    "reportHash": "0x6fd2aba74249f57d6ef1d899643d59ac75a5c10eacab87a9879032f94d82f2df",
+    "reportHash": "0x0ef26b0722a9880598c3e146d911c253231be937eb328c8d9813f0f366342902",
     "baselineYear": 2019,
     "monitoringYear": 2025,
     "ndviBaseline": 5579,

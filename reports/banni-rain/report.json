@@ -531,23 +531,23 @@
     },
     "baseline_rgb.png": {
       "file": "baseline_rgb.png",
-      "sha256": "94c449deb9c7ac1375f6648cbf7c299296df487e759e4b07b48ac30413f41761"
+      "sha256": "fd6677abfe0974bc323a7531a4fdcfd338c87e7c361c030e63e3a7a4e4807230"
     },
     "monitoring_rgb.png": {
       "file": "monitoring_rgb.png",
-      "sha256": "e4b6aa829a08ec9ba18393ad2e7ea82c114c589b304e83ed89c3b75db1a24129"
+      "sha256": "3095f08ee378ffcb3da7adb2511a2901ec237a7517996b65aca982e8b5231008"
     },
     "baseline_ndvi.png": {
       "file": "baseline_ndvi.png",
-      "sha256": "ab3bedbb0b45c2df573f4b10158941aaaf4259e03f3f1ba7c6f0e11c15ae203e"
+      "sha256": "90b00eea481de06792bc94ba0afc9849ea0055efaf91f826542c73bb56b0995a"
     },
     "monitoring_ndvi.png": {
       "file": "monitoring_ndvi.png",
-      "sha256": "7935b85dd53eb3f1c754bb50b92f325799dc038e187cbce9740ce9d84fe502d7"
+      "sha256": "20ef04dc46cf3870510d189b7eb585f0045d067931356cf405cb51f9ee93d17f"
     },
     "ndvi_change.png": {
       "file": "ndvi_change.png",
-      "sha256": "7d6e78bbc6abd4847ee4519e5eb8c67398bee2dc4395b121d1c2c39cc5d39714"
+      "sha256": "ef5309509305585037b124dd5221ea95f57e4ead7a6ac31edc0b4f5478fe23b0"
     },
     "ndvi_histogram.png": {
       "file": "ndvi_histogram.png",
@@ -558,10 +558,10 @@
       "sha256": "0214a170194c1e3bff93a7f0f49960f77374c65a57dd9e2fcee63a7dc1f46876"
     }
   },
-  "reportHash": "0x6162b130a258efed9a5438594a3a1631b52333248dc5ee1149f5e25e401388de",
+  "reportHash": "0x924962e9144a669eb2fafef44bcea93a95c83e37a9717311311261a03463e562",
   "attestation": {
     "geometryHash": "0x5f2bd0c94f44da77b7f21a095792fed48b8e89f7ff786ff1e79ffa448c9d4438",
-    "reportHash": "0x6162b130a258efed9a5438594a3a1631b52333248dc5ee1149f5e25e401388de",
+    "reportHash": "0x924962e9144a669eb2fafef44bcea93a95c83e37a9717311311261a03463e562",
     "baselineYear": 2018,
     "monitoringYear": 2020,
     "ndviBaseline": 1530,

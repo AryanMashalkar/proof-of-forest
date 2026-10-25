@@ -69,8 +69,17 @@ def _zoom_window(inside: np.ndarray):
     return slice(y0, y1), slice(x0, x1)
 
 
+def _landscape_window(ring: np.ndarray, pad: int = 10):
+    """Project plus control ring (the analysis grid also extends further out for the placebo test)."""
+    ys, xs = np.where(ring)
+    h, w = ring.shape
+    return slice(max(0, ys.min() - pad), min(h, ys.max() + pad + 1)), slice(max(0, xs.min() - pad), min(w, xs.max() + pad + 1))
+
+
 def render(out: Path, nb, nm, rgb_b, rgb_m, inside, ring, report) -> list[str]:
     files = []
+    ly, lx = _landscape_window(ring)
+    nb, nm, rgb_b, rgb_m, inside, ring = nb[ly, lx], nm[ly, lx], rgb_b[ly, lx], rgb_m[ly, lx], inside[ly, lx], ring[ly, lx]
     zy, zx = _zoom_window(inside)
     for name, img in (("zoom_baseline_rgb.png", rgb_b), ("zoom_monitoring_rgb.png", rgb_m)):
         fig, ax = _frame(inside[zy, zx].shape)
